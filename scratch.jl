@@ -22,7 +22,7 @@ end
 # Normalize text for topic modelling
 function txtforcomment(comment, stoplist, threshhold)
 	lc = Unicode.normalize(comment; stripmark=true) |> lowercase
-	nopunct = replace(lc, r"[⁑':;\.\"]" => "")
+	nopunct = replace(lc, r"[⁑':;,\.\"]" => "")
 	trimstr(nopunct, stoplist, threshhold)
 end
 

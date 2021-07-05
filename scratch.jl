@@ -117,7 +117,7 @@ function tmcorpus(msnodes)
 end
 
 
-msnodes = filterForTm(c, stoplist)
+msnodes = filterForTm(c, stoplist, 3)
 tmcorp = tmcorpus(msnodes)
 
 

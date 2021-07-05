@@ -29,6 +29,9 @@ stopwordurl = "https://raw.githubusercontent.com/SophiaSarro/Thesis-Material/mas
 stopdata = String(HTTP.get(stopwordurl).body)
 stoplist = split(stopdata, "\n")
 
+open("stops.txt", "w") do io
+	write(io, stopdata)
+end
 
 
 url = "https://raw.githubusercontent.com/hmteditors/composite-summer21/main/data/archive-normed.cex" 

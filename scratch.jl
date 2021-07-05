@@ -60,6 +60,7 @@ end
 
 
 
+
 tmdata = indexnz(m)
 
 
@@ -94,30 +95,27 @@ lexfile = begin
 	"lexfile2.tsv"
 end
 
-println(lexfile)
 
-# DEbug TM module
-using DelimitedFiles
-vocab = readdlm(lexfile, '\t', comments=false)
-terms = vocab[:,1]
-terms[1]
-vkeys = [string(j) for j in vocab[:,2]]
-vkeys[1]
-Dict{Int, String}(zip( vkeys, terms))
+using HTTP
+stopwordurl = "https://raw.githubusercontent.com/SophiaSarro/Thesis-Material/master/topic-modelling-data/scholia-stopwords.txt"
+stopdata = String(HTTP.get(stopwordurl).body)
+stoplist = split(stopdata, "\n")
 
-typelist = map(k -> typeof(k), vkeys) |> unique
-
-keyints = []
-for k in vkeys
-	push!(keyints,parse(Int64,k))
+function trimstr(s, stoplist)
+	trimmed = []
+	for wd in split(s)
+		if wd in stoplist
+			#skip
+		else
+			push!(trimmed, wd)
+		end
+	end
+	join(trimmed, " ")
 end
-Dict{Int, String}(zip(keyints,terms))
-
-
-
 
 tmcorp = readcorp(docfile=tmdocfile, vocabfile=lexfile)
-fixcorp!(tmcorp, trim=true)
+TopicModelsVB.fixcorp!(tmcorp, trim=true, stop=true)
+tmcorp.vocab
 
 its = 30
 k = 10

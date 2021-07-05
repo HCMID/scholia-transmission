@@ -4,6 +4,15 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : missing
+        el
+    end
+end
+
 # ╔═╡ 775648a8-dd7b-11eb-2ef0-afa9581aadbe
 # Import libraries
 begin
@@ -12,11 +21,27 @@ begin
 	using TextAnalysis
 	using CitableText
 	using CitableCorpus
+	using Unicode
+	using PlutoUI
 end
 
 # ╔═╡ b8639742-9c58-490c-a53c-ad307f2c2545
 md"""
 Topic modeling scholia using the julia `TopicModelsVB` module
+"""
+
+# ╔═╡ edbe715f-1567-4209-84c8-da610a3fdab4
+menu = ["all" => "all material in hmt-archive",
+"msA" => "Main scholia of Venetus A",
+"msAim" => "Intermarginal scholia of Venetus A",
+"msAint" => "Interior scholia of Venetus A",
+"msAil" => "Interlinear scholia of Venetus A",
+"msB" => "Scholia of Venetus B",
+"e3" => "Scholia of Escorial, Upsilon 1.1",
+]
+
+# ╔═╡ f1d89ed8-6b18-431e-a701-14d52c5b2058
+md"""Manuscript $(@bind ms Select(menu))
 """
 
 # ╔═╡ 9720e37f-afd6-4343-b3d1-978dcf77fbfe
@@ -33,23 +58,64 @@ url = "https://raw.githubusercontent.com/hmteditors/composite-summer21/main/data
 # ╔═╡ 5afafe51-afe8-4a41-9381-22c52d2135d4
 c = CitableCorpus.fromurl(CitableTextCorpus, url, "|")
 
-# ╔═╡ 459ef9d1-d5b6-4d42-b35d-b6b34d10bebf
-comments = filter(cn -> endswith(cn.urn.urn, "comment"), c.corpus)
+# ╔═╡ aa9c065f-5ad3-4dcf-a283-49d0b46325f0
+# filter nonempty comment nodes according to user's selected MS
+msnodes = begin
+	comments = filter(cn -> endswith(cn.urn.urn, "comment"), c.corpus)
+	commentnodes = filter(cn -> ! isempty(cn.text), comments)
+	ms == "all" ? commentnodes : filter(cn -> occursin(string(".",ms,"."), cn.urn.urn), commentnodes) 
+end
+
+# ╔═╡ 7e8edf03-fde3-45f8-9be4-a2bccfc3fab5
+msnodes |> length
+
+# ╔═╡ bcff1e48-f01b-40b7-a4c6-c2573a272bb8
+# Normalize text for topic modelling
+function txtforcomments(nodelist)
+	txts = map(cn -> Unicode.normalize(cn.text; stripmark=true), nodelist)
+	lc = map(t -> lowercase(t), txts)	
+	lc
+end
+
+# ╔═╡ eb9fdce5-00b1-4a41-8cab-7b5c1e53dfb3
+srcdocs = txtforcomments(msnodes)
+
+# ╔═╡ 04e249d2-fb72-4ecd-9553-e62f3fc45bd4
+docs = map(s -> StringDocument(s), srcdocs)
+
+# ╔═╡ 169d7622-8396-4a39-952f-d123adc980a2
+tacorpus = TextAnalysis.Corpus(docs)
+
+# ╔═╡ 50a313b6-d64a-4f4f-b7ac-25c005bb35dc
+lex = begin
+	update_inverse_index!(tacorpus)
+	update_lexicon!(tacorpus)
+	lexicon(tacorpus)
+end
+
+# ╔═╡ 9a77d431-5e79-49cb-8a69-34eaca79b9a1
+lex |> length
+
+# ╔═╡ c7f95fdf-b629-448a-9d20-ef7f424e1e54
+m = DocumentTermMatrix(tacorpus)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [compat]
 CitableCorpus = "~0.2.1"
 CitableText = "~0.9.0"
+PlutoUI = "~0.7.9"
 TextAnalysis = "~0.7.3"
 TopicModelsVB = "~1.5.1"
 
 [deps]
 CitableCorpus = "cf5ac11a-93ef-4a1a-97a3-f6af101603b5"
 CitableText = "41e66566-473b-49d4-85b7-da83b66615d8"
+PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 TextAnalysis = "a2db99b7-8b79-58f8-94bf-bbc811eef33d"
 TopicModelsVB = "dad468f8-6d63-5d40-b2c4-48631a3ed0cf"
+Unicode = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -345,6 +411,12 @@ version = "1.1.0"
 deps = ["Artifacts", "Dates", "Downloads", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 
+[[PlutoUI]]
+deps = ["Base64", "Dates", "InteractiveUtils", "JSON", "Logging", "Markdown", "Random", "Reexport", "Suppressor"]
+git-tree-sha1 = "44e225d5837e2a2345e69a1d1e01ac2443ff9fcb"
+uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+version = "0.7.9"
+
 [[PooledArrays]]
 deps = ["DataAPI", "Future"]
 git-tree-sha1 = "cde4ce9d6f33219465b55162811d8de8139c0414"
@@ -488,6 +560,11 @@ version = "1.0.1"
 deps = ["Libdl", "LinearAlgebra", "Serialization", "SparseArrays"]
 uuid = "4607b0f0-06f3-5cda-b6b1-a6196a1729e9"
 
+[[Suppressor]]
+git-tree-sha1 = "a819d77f31f83e5792a76081eee1ea6342ab8787"
+uuid = "fd094767-a336-5f1f-9728-57cf17d0bbfb"
+version = "0.2.0"
+
 [[TOML]]
 deps = ["Dates"]
 uuid = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
@@ -558,10 +635,20 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╔═╡ Cell order:
 # ╟─b8639742-9c58-490c-a53c-ad307f2c2545
 # ╠═775648a8-dd7b-11eb-2ef0-afa9581aadbe
-# ╠═9720e37f-afd6-4343-b3d1-978dcf77fbfe
+# ╟─f1d89ed8-6b18-431e-a701-14d52c5b2058
+# ╟─7e8edf03-fde3-45f8-9be4-a2bccfc3fab5
+# ╟─edbe715f-1567-4209-84c8-da610a3fdab4
+# ╟─9720e37f-afd6-4343-b3d1-978dcf77fbfe
 # ╟─93d604b3-fe74-400f-a0bd-b1a1594bf934
+# ╠═169d7622-8396-4a39-952f-d123adc980a2
+# ╟─50a313b6-d64a-4f4f-b7ac-25c005bb35dc
+# ╟─9a77d431-5e79-49cb-8a69-34eaca79b9a1
+# ╟─c7f95fdf-b629-448a-9d20-ef7f424e1e54
+# ╠═04e249d2-fb72-4ecd-9553-e62f3fc45bd4
 # ╟─60706449-4efd-48e8-9737-48827c59f70b
 # ╟─5afafe51-afe8-4a41-9381-22c52d2135d4
-# ╟─459ef9d1-d5b6-4d42-b35d-b6b34d10bebf
+# ╟─aa9c065f-5ad3-4dcf-a283-49d0b46325f0
+# ╟─eb9fdce5-00b1-4a41-8cab-7b5c1e53dfb3
+# ╟─bcff1e48-f01b-40b7-a4c6-c2573a272bb8
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

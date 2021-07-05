@@ -30,9 +30,22 @@ md"""
 Topic modeling scholia using the julia `TopicModelsVB` module
 """
 
+# ╔═╡ 2ebe6ad6-57c3-4462-976a-72e67b833065
+md"Check this to recompute TM $(@bind recompute CheckBox(default=false))"
+
 # ╔═╡ 66181aec-cfbc-4571-b1e1-57cbee29058e
 md"""Number of topics (`k`) $(@bind k Slider(5:40; default=8, show_value=true))
 """
+
+# ╔═╡ f3d95ce0-2bf9-4354-813b-3c6763b10561
+md"""Iterations to run $(@bind its Slider(30:300; default=50, show_value=true))
+"""
+
+# ╔═╡ f6a1af4a-475a-42de-8d07-501c355d3915
+#showtopics(model1, cols=k, 20)
+
+# ╔═╡ 43db3a78-1c25-4ea8-98e9-2f44a71eb526
+md">Do the topic modelling work"
 
 # ╔═╡ edbe715f-1567-4209-84c8-da610a3fdab4
 menu = ["all" => "all material in hmt-archive",
@@ -111,7 +124,7 @@ msnodes |> length
 function txtforcomments(nodelist)
 	txts = map(cn -> Unicode.normalize(cn.text; stripmark=true), nodelist)
 	lc = map(t -> lowercase(t), txts)	
-	lc
+	map(s -> replace(s, r"[;\.\"]" => ""), lc)
 end
 
 # ╔═╡ eb9fdce5-00b1-4a41-8cab-7b5c1e53dfb3
@@ -134,9 +147,33 @@ end
 # ╔═╡ 9a77d431-5e79-49cb-8a69-34eaca79b9a1
 lex |> length
 
+# ╔═╡ 0def0887-6d77-42d7-a0bd-f8bbeae417bd
+sparsedtm = DocumentTermMatrix(tacorpus)
+
+# ╔═╡ 003bfbd9-45d5-4cb3-a2ea-5216ac7c5599
+function termcolumn(trm) 
+	findfirst(t -> t == trm, sparsedtm.terms)
+end
+
+# ╔═╡ 4e88b6ee-6f28-4bd4-8fcc-799b4bb0a04b
+lextsv = begin
+	lines = []
+	for k in keys(lex)
+		push!(lines, string(k,"\t", termcolumn(k)))
+	end
+	join(lines,"\n") * "\n"
+end
+
+# ╔═╡ 3aa1e8e0-33e0-4891-8236-a02571b48be7
+lexfile = begin
+	vfile = tempname()
+	write(vfile,lextsv)
+	vfile
+end
+
+
 # ╔═╡ c7f95fdf-b629-448a-9d20-ef7f424e1e54
 m = begin
-	sparsedtm = DocumentTermMatrix(tacorpus)
 	dtm(sparsedtm, :dense)
 end
 
@@ -152,13 +189,16 @@ tmdocfile = begin
 end
 
 # ╔═╡ f10b394b-4c8b-4bf8-99e3-14645c7a6833
-tmcorp = readcorp(docfile=tmdocfile)
+tmcorp = readcorp(; docfile=tmdocfile)
 
 # ╔═╡ 16d02336-4986-4101-9f97-98d0209f42ce
 fixcorp!(tmcorp, trim=true, condense=false)
 
 # ╔═╡ 23893651-ea33-4005-8079-ad351860ecad
 model1 = LDA(tmcorp, k)
+
+# ╔═╡ 43d132e0-195c-45d2-9867-32dc1ddce8fe
+train!(model1, iter=its, tol=0)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -695,14 +735,20 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 
 # ╔═╡ Cell order:
 # ╟─b8639742-9c58-490c-a53c-ad307f2c2545
-# ╠═775648a8-dd7b-11eb-2ef0-afa9581aadbe
+# ╟─775648a8-dd7b-11eb-2ef0-afa9581aadbe
+# ╟─2ebe6ad6-57c3-4462-976a-72e67b833065
 # ╟─f1d89ed8-6b18-431e-a701-14d52c5b2058
 # ╟─66181aec-cfbc-4571-b1e1-57cbee29058e
+# ╟─f3d95ce0-2bf9-4354-813b-3c6763b10561
 # ╟─7e8edf03-fde3-45f8-9be4-a2bccfc3fab5
 # ╟─275ea6ca-571d-4ac2-8c2c-2808a8ce7011
-# ╟─f10b394b-4c8b-4bf8-99e3-14645c7a6833
-# ╠═16d02336-4986-4101-9f97-98d0209f42ce
+# ╠═3aa1e8e0-33e0-4891-8236-a02571b48be7
+# ╠═f6a1af4a-475a-42de-8d07-501c355d3915
+# ╟─43db3a78-1c25-4ea8-98e9-2f44a71eb526
+# ╠═f10b394b-4c8b-4bf8-99e3-14645c7a6833
+# ╟─16d02336-4986-4101-9f97-98d0209f42ce
 # ╠═23893651-ea33-4005-8079-ad351860ecad
+# ╟─43d132e0-195c-45d2-9867-32dc1ddce8fe
 # ╟─edbe715f-1567-4209-84c8-da610a3fdab4
 # ╟─9720e37f-afd6-4343-b3d1-978dcf77fbfe
 # ╟─93d604b3-fe74-400f-a0bd-b1a1594bf934
@@ -712,7 +758,10 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─dcfa00f1-0240-473e-9120-955d514a74c1
 # ╟─169d7622-8396-4a39-952f-d123adc980a2
 # ╟─50a313b6-d64a-4f4f-b7ac-25c005bb35dc
+# ╟─4e88b6ee-6f28-4bd4-8fcc-799b4bb0a04b
+# ╟─003bfbd9-45d5-4cb3-a2ea-5216ac7c5599
 # ╟─9a77d431-5e79-49cb-8a69-34eaca79b9a1
+# ╟─0def0887-6d77-42d7-a0bd-f8bbeae417bd
 # ╟─c7f95fdf-b629-448a-9d20-ef7f424e1e54
 # ╟─04e249d2-fb72-4ecd-9553-e62f3fc45bd4
 # ╟─60706449-4efd-48e8-9737-48827c59f70b

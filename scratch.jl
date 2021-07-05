@@ -4,12 +4,31 @@ using CitableText
 using CitableCorpus
 using Unicode
 
-# Normalize text for topic modelling
-function txtforcomments(nodelist)
-	txts = map(cn -> Unicode.normalize(cn.text; stripmark=true), nodelist)
-	lc = map(t -> lowercase(t), txts)	
-	map(s -> replace(s, r"[:;\.\"]" => ""), lc)
+# Remove all words in stoplist from s
+function trimstr(s, stoplist)
+	trimmed = []
+	for wd in split(s)
+		if wd in stoplist
+			#skip
+		else
+			push!(trimmed, wd)
+		end
+	end
+	join(trimmed, " ")
 end
+
+# Normalize text for topic modelling
+function txtforcomment(comment, stoplist)
+	lc = Unicode.normalize(comment; stripmark=true) |> lowercase
+	nopunct = replace(lc, r"[:;\.\"]" => "")
+	trimstr(nopunct, stoplist)
+end
+
+using HTTP
+stopwordurl = "https://raw.githubusercontent.com/SophiaSarro/Thesis-Material/master/topic-modelling-data/scholia-stopwords.txt"
+stopdata = String(HTTP.get(stopwordurl).body)
+stoplist = split(stopdata, "\n")
+
 
 
 url = "https://raw.githubusercontent.com/hmteditors/composite-summer21/main/data/archive-normed.cex" 
@@ -17,10 +36,8 @@ c = CitableCorpus.fromurl(CitableTextCorpus, url, "|")
 
 msnodes = begin
 	comments = filter(cn -> endswith(cn.urn.urn, "comment"), c.corpus)
-	commentnodes = filter(cn -> ! isempty(cn.text), comments)
-	catchdeletion = filter(cn -> cn.text != ".", commentnodes)
-	#ms == "all" ? catchdeletion : filter(cn -> occursin(string(".",ms,"."), cn.urn.urn), catchdeletion) 
-	catchdeletion
+	commentnodes = map(cn -> CitableNode(cn.urn, txtforcomment(cn.text, stoplist)), comments)
+	filter(cn -> ! isempty(cn.text), commentnodes)
 end
 
 realsrcdocs = txtforcomments(msnodes)
@@ -96,25 +113,9 @@ lexfile = begin
 end
 
 
-using HTTP
-stopwordurl = "https://raw.githubusercontent.com/SophiaSarro/Thesis-Material/master/topic-modelling-data/scholia-stopwords.txt"
-stopdata = String(HTTP.get(stopwordurl).body)
-stoplist = split(stopdata, "\n")
-
-function trimstr(s, stoplist)
-	trimmed = []
-	for wd in split(s)
-		if wd in stoplist
-			#skip
-		else
-			push!(trimmed, wd)
-		end
-	end
-	join(trimmed, " ")
-end
 
 tmcorp = readcorp(docfile=tmdocfile, vocabfile=lexfile)
-TopicModelsVB.fixcorp!(tmcorp, trim=true, stop=true)
+TopicModelsVB.fixcorp!(tmcorp, trim=true)
 tmcorp.vocab
 
 its = 30

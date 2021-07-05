@@ -30,8 +30,9 @@ md"""
 Topic modeling scholia using the julia `TopicModelsVB` module
 """
 
-# ╔═╡ f10b394b-4c8b-4bf8-99e3-14645c7a6833
-
+# ╔═╡ 66181aec-cfbc-4571-b1e1-57cbee29058e
+md"""Number of topics (`k`) $(@bind k Slider(5:40; default=8, show_value=true))
+"""
 
 # ╔═╡ edbe715f-1567-4209-84c8-da610a3fdab4
 menu = ["all" => "all material in hmt-archive",
@@ -149,6 +150,15 @@ tmdocfile = begin
 	write(f, join(datastrings,"\n"))
 	f
 end
+
+# ╔═╡ f10b394b-4c8b-4bf8-99e3-14645c7a6833
+tmcorp = readcorp(docfile=tmdocfile)
+
+# ╔═╡ 16d02336-4986-4101-9f97-98d0209f42ce
+fixcorp!(tmcorp, trim=true, condense=false)
+
+# ╔═╡ 23893651-ea33-4005-8079-ad351860ecad
+model1 = LDA(tmcorp, k)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -687,9 +697,12 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─b8639742-9c58-490c-a53c-ad307f2c2545
 # ╠═775648a8-dd7b-11eb-2ef0-afa9581aadbe
 # ╟─f1d89ed8-6b18-431e-a701-14d52c5b2058
+# ╟─66181aec-cfbc-4571-b1e1-57cbee29058e
 # ╟─7e8edf03-fde3-45f8-9be4-a2bccfc3fab5
 # ╟─275ea6ca-571d-4ac2-8c2c-2808a8ce7011
-# ╠═f10b394b-4c8b-4bf8-99e3-14645c7a6833
+# ╟─f10b394b-4c8b-4bf8-99e3-14645c7a6833
+# ╠═16d02336-4986-4101-9f97-98d0209f42ce
+# ╠═23893651-ea33-4005-8079-ad351860ecad
 # ╟─edbe715f-1567-4209-84c8-da610a3fdab4
 # ╟─9720e37f-afd6-4343-b3d1-978dcf77fbfe
 # ╟─93d604b3-fe74-400f-a0bd-b1a1594bf934

@@ -1,184 +1,174 @@
-urn:cite2:hmt:pers.v1:TWO_AJAXES
-urn:cite2:hmt:pers.v1:pers
-urn:cite2:hmt:pers.v1:pers1
-urn:cite2:hmt:pers.v1:pers1 
-urn:cite2:hmt:pers.v1:pers1002
-urn:cite2:hmt:pers.v1:pers1008
-urn:cite2:hmt:pers.v1:pers1032
-urn:cite2:hmt:pers.v1:pers1033
-urn:cite2:hmt:pers.v1:pers1035
-urn:cite2:hmt:pers.v1:pers1109
-urn:cite2:hmt:pers.v1:pers111
-urn:cite2:hmt:pers.v1:pers113
-urn:cite2:hmt:pers.v1:pers115
-urn:cite2:hmt:pers.v1:pers1152
-urn:cite2:hmt:pers.v1:pers116
-urn:cite2:hmt:pers.v1:pers117
-urn:cite2:hmt:pers.v1:pers1179
-urn:cite2:hmt:pers.v1:pers118
-urn:cite2:hmt:pers.v1:pers118 
-urn:cite2:hmt:pers.v1:pers119
-urn:cite2:hmt:pers.v1:pers1198
-urn:cite2:hmt:pers.v1:pers123
-urn:cite2:hmt:pers.v1:pers1261
-urn:cite2:hmt:pers.v1:pers1262
-urn:cite2:hmt:pers.v1:pers1264
-urn:cite2:hmt:pers.v1:pers1266
-urn:cite2:hmt:pers.v1:pers127
-urn:cite2:hmt:pers.v1:pers1272
-urn:cite2:hmt:pers.v1:pers1273
-urn:cite2:hmt:pers.v1:pers1282
-urn:cite2:hmt:pers.v1:pers1283
-urn:cite2:hmt:pers.v1:pers129
-urn:cite2:hmt:pers.v1:pers1293
-urn:cite2:hmt:pers.v1:pers1295
-urn:cite2:hmt:pers.v1:pers1297
-urn:cite2:hmt:pers.v1:pers135
-urn:cite2:hmt:pers.v1:pers139
-urn:cite2:hmt:pers.v1:pers14
-urn:cite2:hmt:pers.v1:pers142
-urn:cite2:hmt:pers.v1:pers142 
-urn:cite2:hmt:pers.v1:pers145
-urn:cite2:hmt:pers.v1:pers146
-urn:cite2:hmt:pers.v1:pers147
-urn:cite2:hmt:pers.v1:pers15
-urn:cite2:hmt:pers.v1:pers156
-urn:cite2:hmt:pers.v1:pers158
-urn:cite2:hmt:pers.v1:pers159
-urn:cite2:hmt:pers.v1:pers16
-urn:cite2:hmt:pers.v1:pers160
-urn:cite2:hmt:pers.v1:pers168
-urn:cite2:hmt:pers.v1:pers17
-urn:cite2:hmt:pers.v1:pers170
-urn:cite2:hmt:pers.v1:pers171
-urn:cite2:hmt:pers.v1:pers172
-urn:cite2:hmt:pers.v1:pers172 
-urn:cite2:hmt:pers.v1:pers178
-urn:cite2:hmt:pers.v1:pers180
-urn:cite2:hmt:pers.v1:pers184
-urn:cite2:hmt:pers.v1:pers187
-urn:cite2:hmt:pers.v1:pers19
-urn:cite2:hmt:pers.v1:pers192
-urn:cite2:hmt:pers.v1:pers194
-urn:cite2:hmt:pers.v1:pers195
-urn:cite2:hmt:pers.v1:pers2
-urn:cite2:hmt:pers.v1:pers201
-urn:cite2:hmt:pers.v1:pers204
-urn:cite2:hmt:pers.v1:pers21
-urn:cite2:hmt:pers.v1:pers210
-urn:cite2:hmt:pers.v1:pers212
-urn:cite2:hmt:pers.v1:pers215
-urn:cite2:hmt:pers.v1:pers215 
-urn:cite2:hmt:pers.v1:pers216
-urn:cite2:hmt:pers.v1:pers217
-urn:cite2:hmt:pers.v1:pers22
-urn:cite2:hmt:pers.v1:pers22 
-urn:cite2:hmt:pers.v1:pers220
-urn:cite2:hmt:pers.v1:pers222
-urn:cite2:hmt:pers.v1:pers227
-urn:cite2:hmt:pers.v1:pers23
-urn:cite2:hmt:pers.v1:pers233
-urn:cite2:hmt:pers.v1:pers243
-urn:cite2:hmt:pers.v1:pers244
-urn:cite2:hmt:pers.v1:pers251
-urn:cite2:hmt:pers.v1:pers262
-urn:cite2:hmt:pers.v1:pers270
-urn:cite2:hmt:pers.v1:pers276
-urn:cite2:hmt:pers.v1:pers279
-urn:cite2:hmt:pers.v1:pers281
-urn:cite2:hmt:pers.v1:pers282
-urn:cite2:hmt:pers.v1:pers286
-urn:cite2:hmt:pers.v1:pers287
-urn:cite2:hmt:pers.v1:pers29
-urn:cite2:hmt:pers.v1:pers293
-urn:cite2:hmt:pers.v1:pers30
-urn:cite2:hmt:pers.v1:pers300
-urn:cite2:hmt:pers.v1:pers305
-urn:cite2:hmt:pers.v1:pers308
-urn:cite2:hmt:pers.v1:pers31
-urn:cite2:hmt:pers.v1:pers312
-urn:cite2:hmt:pers.v1:pers32
-urn:cite2:hmt:pers.v1:pers320
-urn:cite2:hmt:pers.v1:pers323
-urn:cite2:hmt:pers.v1:pers327
-urn:cite2:hmt:pers.v1:pers352
-urn:cite2:hmt:pers.v1:pers382
-urn:cite2:hmt:pers.v1:pers388
-urn:cite2:hmt:pers.v1:pers39
-urn:cite2:hmt:pers.v1:pers391
-urn:cite2:hmt:pers.v1:pers396
-urn:cite2:hmt:pers.v1:pers4
-urn:cite2:hmt:pers.v1:pers40
-urn:cite2:hmt:pers.v1:pers452
-urn:cite2:hmt:pers.v1:pers463
-urn:cite2:hmt:pers.v1:pers469
-urn:cite2:hmt:pers.v1:pers47
-urn:cite2:hmt:pers.v1:pers470
-urn:cite2:hmt:pers.v1:pers471
-urn:cite2:hmt:pers.v1:pers472
-urn:cite2:hmt:pers.v1:pers473
-urn:cite2:hmt:pers.v1:pers474
-urn:cite2:hmt:pers.v1:pers475
-urn:cite2:hmt:pers.v1:pers493
-urn:cite2:hmt:pers.v1:pers494
-urn:cite2:hmt:pers.v1:pers5
-urn:cite2:hmt:pers.v1:pers504
-urn:cite2:hmt:pers.v1:pers506
-urn:cite2:hmt:pers.v1:pers562
-urn:cite2:hmt:pers.v1:pers587
-urn:cite2:hmt:pers.v1:pers590
-urn:cite2:hmt:pers.v1:pers597
-urn:cite2:hmt:pers.v1:pers598
-urn:cite2:hmt:pers.v1:pers599
-urn:cite2:hmt:pers.v1:pers600
-urn:cite2:hmt:pers.v1:pers601
-urn:cite2:hmt:pers.v1:pers602
-urn:cite2:hmt:pers.v1:pers603
-urn:cite2:hmt:pers.v1:pers604
-urn:cite2:hmt:pers.v1:pers605
-urn:cite2:hmt:pers.v1:pers606
-urn:cite2:hmt:pers.v1:pers607
-urn:cite2:hmt:pers.v1:pers608
-urn:cite2:hmt:pers.v1:pers609
-urn:cite2:hmt:pers.v1:pers610
-urn:cite2:hmt:pers.v1:pers613
-urn:cite2:hmt:pers.v1:pers614
-urn:cite2:hmt:pers.v1:pers615
-urn:cite2:hmt:pers.v1:pers617
-urn:cite2:hmt:pers.v1:pers618
-urn:cite2:hmt:pers.v1:pers624
-urn:cite2:hmt:pers.v1:pers625
-urn:cite2:hmt:pers.v1:pers626
-urn:cite2:hmt:pers.v1:pers629
-urn:cite2:hmt:pers.v1:pers630
-urn:cite2:hmt:pers.v1:pers631
-urn:cite2:hmt:pers.v1:pers632
-urn:cite2:hmt:pers.v1:pers633
-urn:cite2:hmt:pers.v1:pers634
-urn:cite2:hmt:pers.v1:pers635
-urn:cite2:hmt:pers.v1:pers636
-urn:cite2:hmt:pers.v1:pers637
-urn:cite2:hmt:pers.v1:pers638
-urn:cite2:hmt:pers.v1:pers639
-urn:cite2:hmt:pers.v1:pers640
-urn:cite2:hmt:pers.v1:pers641
-urn:cite2:hmt:pers.v1:pers65
-urn:cite2:hmt:pers.v1:pers66
-urn:cite2:hmt:pers.v1:pers67
-urn:cite2:hmt:pers.v1:pers67 
-urn:cite2:hmt:pers.v1:pers678
-urn:cite2:hmt:pers.v1:pers695
-urn:cite2:hmt:pers.v1:pers71
-urn:cite2:hmt:pers.v1:pers712
-urn:cite2:hmt:pers.v1:pers727
-urn:cite2:hmt:pers.v1:pers76
-urn:cite2:hmt:pers.v1:pers8
-urn:cite2:hmt:pers.v1:pers8 
-urn:cite2:hmt:pers.v1:pers801
-urn:cite2:hmt:pers.v1:pers83
-urn:cite2:hmt:pers.v1:pers842
-urn:cite2:hmt:pers.v1:pers879
-urn:cite2:hmt:pers.v1:pers880
-urn:cite2:hmt:pers.v1:pers929
-urn:cite2:hmt:pers.v1:pers93
-urn:cite2:hmt:pers.v1:pers94
+urn:cite2:hmt:pers.v1:pers1 Achilles
+urn:cite2:hmt:pers.v1:pers1002 Pleione
+urn:cite2:hmt:pers.v1:pers1008 Alcyone
+urn:cite2:hmt:pers.v1:pers1032 Phoenix
+urn:cite2:hmt:pers.v1:pers1033 Moira
+urn:cite2:hmt:pers.v1:pers1035 Ate
+urn:cite2:hmt:pers.v1:pers1109 Isocrates
+urn:cite2:hmt:pers.v1:pers111 Scamander
+urn:cite2:hmt:pers.v1:pers113 Briseis
+urn:cite2:hmt:pers.v1:pers115 Cheiron
+urn:cite2:hmt:pers.v1:pers1152 Aphareus
+urn:cite2:hmt:pers.v1:pers116 Hera
+urn:cite2:hmt:pers.v1:pers117 Nestor
+urn:cite2:hmt:pers.v1:pers1179 Eumaeus
+urn:cite2:hmt:pers.v1:pers118 Odysseus
+urn:cite2:hmt:pers.v1:pers119 Menelaus
+urn:cite2:hmt:pers.v1:pers1198 Aphareus
+urn:cite2:hmt:pers.v1:pers123 Oceanus
+urn:cite2:hmt:pers.v1:pers1261 Triton
+urn:cite2:hmt:pers.v1:pers1262 Aethe
+urn:cite2:hmt:pers.v1:pers1264 Lycomedes
+urn:cite2:hmt:pers.v1:pers1266 Iphianassa
+urn:cite2:hmt:pers.v1:pers127 Ajax
+urn:cite2:hmt:pers.v1:pers1272 Althaea
+urn:cite2:hmt:pers.v1:pers1273 Cleopatra
+urn:cite2:hmt:pers.v1:pers1282 Marpessa
+urn:cite2:hmt:pers.v1:pers1283 Evenus
+urn:cite2:hmt:pers.v1:pers129 Paris
+urn:cite2:hmt:pers.v1:pers1293 Phorbas
+urn:cite2:hmt:pers.v1:pers1295 Iphis
+urn:cite2:hmt:pers.v1:pers1297 Osiris
+urn:cite2:hmt:pers.v1:pers135 Metis
+urn:cite2:hmt:pers.v1:pers139 Cronus
+urn:cite2:hmt:pers.v1:pers14 Hellen
+urn:cite2:hmt:pers.v1:pers142 Aeneas
+urn:cite2:hmt:pers.v1:pers145 Priam
+urn:cite2:hmt:pers.v1:pers146 Hyperion
+urn:cite2:hmt:pers.v1:pers147 Helius
+urn:cite2:hmt:pers.v1:pers15 Zenodotus
+urn:cite2:hmt:pers.v1:pers156 Eris
+urn:cite2:hmt:pers.v1:pers158 Patroclus
+urn:cite2:hmt:pers.v1:pers159 Talthybius
+urn:cite2:hmt:pers.v1:pers16 Aristarchus
+urn:cite2:hmt:pers.v1:pers160 Eurybates
+urn:cite2:hmt:pers.v1:pers168 Nereus
+urn:cite2:hmt:pers.v1:pers17 Homer
+urn:cite2:hmt:pers.v1:pers170 Eetion
+urn:cite2:hmt:pers.v1:pers171 Andromache
+urn:cite2:hmt:pers.v1:pers172 Hector
+urn:cite2:hmt:pers.v1:pers178 Sophocles
+urn:cite2:hmt:pers.v1:pers180 Ganymedes
+urn:cite2:hmt:pers.v1:pers184 Peleus
+urn:cite2:hmt:pers.v1:pers187 Altes
+urn:cite2:hmt:pers.v1:pers19 Thetis
+urn:cite2:hmt:pers.v1:pers192 Hephaestus
+urn:cite2:hmt:pers.v1:pers194 Aphrodite
+urn:cite2:hmt:pers.v1:pers195 Sarpedon
+urn:cite2:hmt:pers.v1:pers2 Lycomedes
+urn:cite2:hmt:pers.v1:pers201 Hades
+urn:cite2:hmt:pers.v1:pers204 Neleus
+urn:cite2:hmt:pers.v1:pers21 Aristophanes
+urn:cite2:hmt:pers.v1:pers210 Demeter
+urn:cite2:hmt:pers.v1:pers212 Merion
+urn:cite2:hmt:pers.v1:pers215 Diomedes
+urn:cite2:hmt:pers.v1:pers216 Pandarus
+urn:cite2:hmt:pers.v1:pers217 Automedon
+urn:cite2:hmt:pers.v1:pers22 Agamemnon
+urn:cite2:hmt:pers.v1:pers220 Tros
+urn:cite2:hmt:pers.v1:pers222 Thoas
+urn:cite2:hmt:pers.v1:pers227 Idaeus
+urn:cite2:hmt:pers.v1:pers23 Atreus
+urn:cite2:hmt:pers.v1:pers233 Alcinous
+urn:cite2:hmt:pers.v1:pers243 Teucer
+urn:cite2:hmt:pers.v1:pers244 Eurypylus
+urn:cite2:hmt:pers.v1:pers251 Tydeus
+urn:cite2:hmt:pers.v1:pers262 Persephone
+urn:cite2:hmt:pers.v1:pers270 Sthenelus
+urn:cite2:hmt:pers.v1:pers276 Podargus
+urn:cite2:hmt:pers.v1:pers279 Simonides
+urn:cite2:hmt:pers.v1:pers281 Ajax
+urn:cite2:hmt:pers.v1:pers282 Iris
+urn:cite2:hmt:pers.v1:pers286 Eos
+urn:cite2:hmt:pers.v1:pers287 Idomeneus
+urn:cite2:hmt:pers.v1:pers29 Clytemnestra
+urn:cite2:hmt:pers.v1:pers293 Hodius
+urn:cite2:hmt:pers.v1:pers30 Orestes
+urn:cite2:hmt:pers.v1:pers300 Aristotle
+urn:cite2:hmt:pers.v1:pers305 Litai
+urn:cite2:hmt:pers.v1:pers308 Ptolemy Epithetes
+urn:cite2:hmt:pers.v1:pers31 Laodike
+urn:cite2:hmt:pers.v1:pers312 Meleager
+urn:cite2:hmt:pers.v1:pers32 Chrysothemis
+urn:cite2:hmt:pers.v1:pers320 Zephyrus
+urn:cite2:hmt:pers.v1:pers323 Dionysius of Sidonius
+urn:cite2:hmt:pers.v1:pers327 Oeneus
+urn:cite2:hmt:pers.v1:pers352 Atalanta
+urn:cite2:hmt:pers.v1:pers382 Megapenthes
+urn:cite2:hmt:pers.v1:pers388 Mekisteus
+urn:cite2:hmt:pers.v1:pers39 Artemis
+urn:cite2:hmt:pers.v1:pers391 Eurystheus
+urn:cite2:hmt:pers.v1:pers396 Hippokoon
+urn:cite2:hmt:pers.v1:pers4 Hesiod
+urn:cite2:hmt:pers.v1:pers40 Apollo
+urn:cite2:hmt:pers.v1:pers452 Rhesus
+urn:cite2:hmt:pers.v1:pers463 Glaucus
+urn:cite2:hmt:pers.v1:pers469 Phyleus
+urn:cite2:hmt:pers.v1:pers47 Poseidon
+urn:cite2:hmt:pers.v1:pers470 Amphidamas
+urn:cite2:hmt:pers.v1:pers471 Molus
+urn:cite2:hmt:pers.v1:pers472 Autolycus
+urn:cite2:hmt:pers.v1:pers473 Amyntor
+urn:cite2:hmt:pers.v1:pers474 Dolon
+urn:cite2:hmt:pers.v1:pers475 Eumedes
+urn:cite2:hmt:pers.v1:pers493 Aelius Herodianus
+urn:cite2:hmt:pers.v1:pers494 Ilos
+urn:cite2:hmt:pers.v1:pers5 Pindar
+urn:cite2:hmt:pers.v1:pers504 Menoetius
+urn:cite2:hmt:pers.v1:pers506 Cebriones
+urn:cite2:hmt:pers.v1:pers562 Iapetus
+urn:cite2:hmt:pers.v1:pers587 Euaemon
+urn:cite2:hmt:pers.v1:pers590 Eurymedon
+urn:cite2:hmt:pers.v1:pers597 Brontes
+urn:cite2:hmt:pers.v1:pers598 Democritus
+urn:cite2:hmt:pers.v1:pers599 Boreas
+urn:cite2:hmt:pers.v1:pers600 Philoetius
+urn:cite2:hmt:pers.v1:pers601 Thebaeus
+urn:cite2:hmt:pers.v1:pers602 Lampus
+urn:cite2:hmt:pers.v1:pers603 Podargus
+urn:cite2:hmt:pers.v1:pers604 Xanthus
+urn:cite2:hmt:pers.v1:pers605 Aethon
+urn:cite2:hmt:pers.v1:pers606 Archeptolemus
+urn:cite2:hmt:pers.v1:pers607 Ereuthalion
+urn:cite2:hmt:pers.v1:pers608 Eniopeus
+urn:cite2:hmt:pers.v1:pers609 Clytomedes
+urn:cite2:hmt:pers.v1:pers610 Ancaeus
+urn:cite2:hmt:pers.v1:pers613 Amopaon
+urn:cite2:hmt:pers.v1:pers614 Telamon
+urn:cite2:hmt:pers.v1:pers615 Diogenes
+urn:cite2:hmt:pers.v1:pers617 Ascalaphus
+urn:cite2:hmt:pers.v1:pers618 Medusa
+urn:cite2:hmt:pers.v1:pers624 Lampus
+urn:cite2:hmt:pers.v1:pers625 Aethon
+urn:cite2:hmt:pers.v1:pers626 Xanthus
+urn:cite2:hmt:pers.v1:pers629 Alastor
+urn:cite2:hmt:pers.v1:pers630 Agelaus
+urn:cite2:hmt:pers.v1:pers631 Orsilochus
+urn:cite2:hmt:pers.v1:pers632 Ormenus
+urn:cite2:hmt:pers.v1:pers633 Ophelestes
+urn:cite2:hmt:pers.v1:pers634 Daetor
+urn:cite2:hmt:pers.v1:pers635 Chromius
+urn:cite2:hmt:pers.v1:pers636 Lycophontes
+urn:cite2:hmt:pers.v1:pers637 Melanippus
+urn:cite2:hmt:pers.v1:pers638 Gorgythion
+urn:cite2:hmt:pers.v1:pers639 Castianeira
+urn:cite2:hmt:pers.v1:pers640 Mecisteus
+urn:cite2:hmt:pers.v1:pers641 Echius
+urn:cite2:hmt:pers.v1:pers65 Aegyptus
+urn:cite2:hmt:pers.v1:pers66 Danaus
+urn:cite2:hmt:pers.v1:pers67 Athena
+urn:cite2:hmt:pers.v1:pers678 Herodicus
+urn:cite2:hmt:pers.v1:pers695 Idaeus
+urn:cite2:hmt:pers.v1:pers71 Heracles
+urn:cite2:hmt:pers.v1:pers712 Antilochus
+urn:cite2:hmt:pers.v1:pers727 Ialmenus
+urn:cite2:hmt:pers.v1:pers76 Nicanor
+urn:cite2:hmt:pers.v1:pers8 Zeus
+urn:cite2:hmt:pers.v1:pers801 Tiresias
+urn:cite2:hmt:pers.v1:pers83 Ares
+urn:cite2:hmt:pers.v1:pers842 Polyidus
+urn:cite2:hmt:pers.v1:pers879 Deipyros
+urn:cite2:hmt:pers.v1:pers880 Thrasymedes
+urn:cite2:hmt:pers.v1:pers929 Idas
+urn:cite2:hmt:pers.v1:pers93 Thestius
+urn:cite2:hmt:pers.v1:pers94 Helen

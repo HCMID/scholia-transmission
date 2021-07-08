@@ -1,29 +1,42 @@
-urn:cts:greekLit:tlg0012.tlg001.msB:8.359 URN has wrong collection for a personal name (Ἀργείων)
-urn:cts:greekLit:tlg0012.tlg001.msB:8.393 Invalid URN syntax (persName Ὧραι)
+urn:cts:greekLit:tlg0012.tlg001.msB:10.228 No entry in authlist matching |urn:cite2:hmt:pers.v1:TWO_AJAXES|
+urn:cts:greekLit:tlg0012.tlg001.msB:8.134 No entry in authlist matching |urn:cite2:hmt:pers.v1:pers215 |
+urn:cts:greekLit:tlg0012.tlg001.msB:8.218 No entry in authlist matching |urn:cite2:hmt:pers.v1:pers22 |
+urn:cts:greekLit:tlg0012.tlg001.msB:8.359 No entry in authlist matching |urn:cite2:hmt:place.v1:place114|
+urn:cts:greekLit:tlg0012.tlg001.msB:8.393 No entry in authlist matching ||
 urn:cts:greekLit:tlg0012.tlg001.msB:8.560 No @n attribute on Ξάνθοιο
-urn:cts:greekLit:tlg5026.msB.hmt:8.108v_7.comment URN has wrong collection for a personal name (Ἕλληνας)
-urn:cts:greekLit:tlg5026.e3.hmt:9.e3_109v_12.comment URN has wrong collection for a personal name (ἈχιλλέἈχιλλέως)
-urn:cts:greekLit:tlg5026.e3.hmt:9.e3_109v_12.comment URN has wrong collection for a personal name (Νέστωρ)
-urn:cts:greekLit:tlg5026.e3.hmt:9.e3_110v_4.comment URN has wrong collection for a personal name (Νέστωρ)
-urn:cts:greekLit:tlg5026.e3.hmt:9.e3_112r_9.comment URN has wrong collection for a personal name (Ἀχιλλέως)
-urn:cts:greekLit:tlg5026.e3.hmt:9.e3_112r_10.comment URN has wrong collection for a personal name (Ἀχιλλέως)
-urn:cts:greekLit:tlg5026.e3.hmt:9.e3_112v_6.comment URN has wrong collection for a personal name (Ἀγαμέμνων)
-urn:cts:greekLit:tlg5026.e3.hmt:9.e3_112v_6.comment URN has wrong collection for a personal name (Κλυταιμνήστρας)
-urn:cts:greekLit:tlg5026.e3.hmt:9.e3_112v_6.comment URN has wrong collection for a personal name (Ἀχιλλεῖ)
-urn:cts:greekLit:tlg5026.e3.hmt:9.e3_112v_6.comment URN has wrong collection for a personal name (Πηλέως)
-urn:cts:greekLit:tlg5026.e3.hmt:9.e3_112v_10.comment URN has wrong collection for a personal name (Ἅδην)
-urn:cts:greekLit:tlg5026.e3.hmt:9.e3_112v_10.comment URN has wrong collection for a personal name (Αἵδου)
-urn:cts:greekLit:tlg5026.e3.hmt:9.e3_112v_10.comment URN has wrong collection for a personal name (Αἵδου)
+urn:cts:greekLit:tlg5026.msB.hmt:8.104v_5.comment No entry in authlist matching |urn:cite2:hmt:pers.v1:pers8 |
+urn:cts:greekLit:tlg5026.msB.hmt:8.104v_11.comment No entry in authlist matching |urn:cite2:hmt:pers.v1:pers118 |
+urn:cts:greekLit:tlg5026.msB.hmt:8.105r_1.comment No entry in authlist matching |urn:cite2:hmt:pers.v1:pers215 |
+urn:cts:greekLit:tlg5026.msB.hmt:8.105r_5.comment No entry in authlist matching |urn:cite2:hmt:pers.v1:pers118 |
+urn:cts:greekLit:tlg5026.msB.hmt:8.105r_5.comment No entry in authlist matching |urn:cite2:hmt:pers.v1:pers142 |
+urn:cts:greekLit:tlg5026.msB.hmt:8.105r_6.comment No entry in authlist matching |urn:cite2:hmt:pers.v1:pers1 |
+urn:cts:greekLit:tlg5026.msB.hmt:8.108v_7.comment No entry in authlist matching |urn:cite2:hmt:place.v1:place3|
+urn:cts:greekLit:tlg0012.tlg001.e3:10.228 No entry in authlist matching |urn:cite2:hmt:pers.v1:TWO_AJAXES|
+urn:cts:greekLit:tlg0012.tlg001.e3:10.245 No entry in authlist matching |urn:cite2:hmt:pers.v1:pers67 |
+urn:cts:greekLit:tlg5026.e3.hmt:10.129v_10.comment No entry in authlist matching |urn:cite2:hmt:pers.v1:pers|
+urn:cts:greekLit:tlg5026.e3.hmt:9.e3_109v_12.comment No entry in authlist matching |urn:cite2:hmt:place.v1:place1|
+urn:cts:greekLit:tlg5026.e3.hmt:9.e3_109v_12.comment No entry in authlist matching |urn:cite2:hmt:place.v1:place117|
+urn:cts:greekLit:tlg5026.e3.hmt:9.e3_110v_4.comment No entry in authlist matching |urn:cite2:hmt:place.v1:place117|
+urn:cts:greekLit:tlg5026.e3.hmt:9.e3_112r_9.comment No entry in authlist matching |urn:cite2:hmt:place.v1:place1|
+urn:cts:greekLit:tlg5026.e3.hmt:9.e3_112r_10.comment No entry in authlist matching |urn:cite2:hmt:place.v1:place1|
+urn:cts:greekLit:tlg5026.e3.hmt:9.e3_112v_6.comment No entry in authlist matching |urn:cite2:hmt:place.v1:place22|
+urn:cts:greekLit:tlg5026.e3.hmt:9.e3_112v_6.comment No entry in authlist matching |urn:cite2:hmt:place.v1:place29|
+urn:cts:greekLit:tlg5026.e3.hmt:9.e3_112v_6.comment No entry in authlist matching |urn:cite2:hmt:place.v1:place1|
+urn:cts:greekLit:tlg5026.e3.hmt:9.e3_112v_6.comment No entry in authlist matching |urn:cite2:hmt:place.v1:place184|
+urn:cts:greekLit:tlg5026.e3.hmt:9.e3_112v_10.comment No entry in authlist matching |urn:cite2:hmt:place.v1:place201|
+urn:cts:greekLit:tlg5026.e3.hmt:9.e3_112v_10.comment No entry in authlist matching |urn:cite2:hmt:place.v1:place201|
+urn:cts:greekLit:tlg5026.e3.hmt:9.e3_112v_10.comment No entry in authlist matching |urn:cite2:hmt:place.v1:place201|
 urn:cts:greekLit:tlg0012.tlg001.burney86:8.79 No @n attribute on Ἄρηος
-urn:cts:greekLit:tlg0012.tlg001.burney86:8.185 Invalid URN syntax (persName Πόδαργε)
+urn:cts:greekLit:tlg0012.tlg001.burney86:8.185 No entry in authlist matching ||
 urn:cts:greekLit:tlg0012.tlg001.burney86:8.303 No @n attribute on Πριάμοιο
-urn:cts:greekLit:tlg0012.tlg001.burney86:8.442 URN has wrong collection for a personal name (Ζεὺς)
+urn:cts:greekLit:tlg0012.tlg001.burney86:8.442 No entry in authlist matching |urn:cite2:hmt:place.v1:pers8|
 urn:cts:greekLit:tlg5026.burney86int.hmt:8.75v_1.lemma No @n attribute on Ἕκτωρ
 urn:cts:greekLit:tlg5026.burney86int.hmt:8.75v_1.comment No @n attribute on Διομήδους
 urn:cts:greekLit:tlg5026.burney86int.hmt:8.77v_1.comment No @n attribute on ὈδὈδυσσεὺς
 urn:cts:greekLit:tlg5026.burney86int.hmt:8.77v_1.comment No @n attribute on Ἀγαμέμνονα
-urn:cts:greekLit:tlg5026.burney86.hmt:8.73r_12.comment URN has wrong collection for a personal name (Νικάνωρ)
+urn:cts:greekLit:tlg5026.burney86.hmt:8.73r_12.comment No entry in authlist matching |urn:cite2:hmt:place.v1:pers76|
 urn:cts:greekLit:tlg5026.burney86.hmt:8.73v_6.comment No @n attribute on Ἀθηνᾶ
 urn:cts:greekLit:tlg5026.burney86.hmt:8.75r_6.comment No @n attribute on Ἀντίλοχος
 urn:cts:greekLit:tlg5026.burney86.hmt:8.75r_6.comment No @n attribute on Νέστορι
 urn:cts:greekLit:tlg5026.burney86.hmt:8.76r_6.lemma No @n attribute on Τυδείδης
+urn:cts:greekLit:tlg5026.burney86.hmt:8.79r_9.comment No entry in authlist matching |urn:cite2:hmt:pers.v1:pers172 |

@@ -1,0 +1,11 @@
+urn:cts:greekLit:tlg0012.tlg001.msB:8.560 No @n attribute on Ξάνθοιο
+urn:cts:greekLit:tlg0012.tlg001.burney86:8.79 No @n attribute on Ἄρηος
+urn:cts:greekLit:tlg0012.tlg001.burney86:8.303 No @n attribute on Πριάμοιο
+urn:cts:greekLit:tlg5026.burney86int.hmt:8.75v_1.lemma No @n attribute on Ἕκτωρ
+urn:cts:greekLit:tlg5026.burney86int.hmt:8.75v_1.comment No @n attribute on Διομήδους
+urn:cts:greekLit:tlg5026.burney86int.hmt:8.77v_1.comment No @n attribute on ὈδὈδυσσεὺς
+urn:cts:greekLit:tlg5026.burney86int.hmt:8.77v_1.comment No @n attribute on Ἀγαμέμνονα
+urn:cts:greekLit:tlg5026.burney86.hmt:8.73v_6.comment No @n attribute on Ἀθηνᾶ
+urn:cts:greekLit:tlg5026.burney86.hmt:8.75r_6.comment No @n attribute on Ἀντίλοχος
+urn:cts:greekLit:tlg5026.burney86.hmt:8.75r_6.comment No @n attribute on Νέστορι
+urn:cts:greekLit:tlg5026.burney86.hmt:8.76r_6.lemma No @n attribute on Τυδείδης

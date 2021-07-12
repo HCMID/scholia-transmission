@@ -8,7 +8,9 @@ xmlcorpus = CitableCorpus.fromurl(CitableTextCorpus, xmlurl, "|")
 tmfile = "data/topicmodelingedition.cex"
 
 function writeedition(bldr, corpus::CitableTextCorpus, outfile)
-    tmedition = edition(bldr, corpus)
+    tmeditionraw = edition(bldr, corpus)
+    tmnodes = filter(cn -> ! isempty(cn.text), tmeditionraw.corpus) 
+    tmedition = CitableTextCorpus(tmnodes)
     tmcex = cex(tmedition)
 
     open(outfile,"w") do io

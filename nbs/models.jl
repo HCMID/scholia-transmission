@@ -46,13 +46,19 @@ md"""# Models
 """
 
 # ╔═╡ f3d5c1dc-4720-4050-a5f2-6467324f598a
-md"""## Models for a corpus of text in Julia
+md"""## Models for a corpus of text
 
+
+Some Julia modules:
 
 1. `CitableCorpus` module: series of nodes with `CtsUrn` and text content
 2. `TextAnalysis` module: series of strings; can be converted to Document-Term matrix
 3. `TopicModelsVB` module: 
 
+
+JSLDA:
+
+- a series of nodes associatnig and identifier and classifying label with each "document"
 
 Pipeline:
 
@@ -68,10 +74,10 @@ md"## CitableCorpus"
 md"Load a corpus with the XML for every citable unit (\"document\") in HMT:  here's the URL"
 
 # ╔═╡ f32b30a4-1650-4a30-a3f2-796c360ed214
-xmlurl = "https://raw.githubusercontent.com/hmteditors/composite-summer21/main/data/archive-xml.cex"
+url = "https://raw.githubusercontent.com/HCMID/scholia-transmission/main/data/topicmodelingedition.cex"
 
 # ╔═╡ 3c56b217-2242-45cc-8d02-5955b578ce72
-citable = CitableCorpus.fromurl(CitableTextCorpus, xmlurl, "|")
+citable = CitableCorpus.fromurl(CitableTextCorpus, url, "|")
 
 # ╔═╡ 91c5e15a-e110-4494-ba6c-dbbc899c5229
 md"""
@@ -81,17 +87,11 @@ The corpus has an array of citable nodes called `corpus`.  Let's see how many th
 # ╔═╡ 1869e008-8cdf-486a-a32c-05f474b59229
 length(citable.corpus)
 
-# ╔═╡ f1301f49-bd73-4fb6-9687-aa68c5beb7a8
-md""" #### Tweaking a CitableCorpus for topic modelling"""
-
-# ╔═╡ 4c4b56d5-c967-4354-9f5d-3c2610f474ff
-
+# ╔═╡ e8de1fbc-8034-406c-986c-a0a5e237ff18
+md"## TextAnalysis"
 
 # ╔═╡ b38306f0-61ea-4aa7-a522-d59e5c63db48
 md"## TopicModelsVB"
-
-# ╔═╡ e8de1fbc-8034-406c-986c-a0a5e237ff18
-md"## TextAnalysis"
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -615,7 +615,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 """
 
 # ╔═╡ Cell order:
-# ╠═def34108-d2ca-4f88-8a48-2ea8c6b70ee5
+# ╟─def34108-d2ca-4f88-8a48-2ea8c6b70ee5
 # ╟─36077ee5-03a6-4257-a3b9-8259e5601813
 # ╟─680efdfc-e318-11eb-390c-d947b6a33e1b
 # ╟─f3d5c1dc-4720-4050-a5f2-6467324f598a
@@ -625,9 +625,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═3c56b217-2242-45cc-8d02-5955b578ce72
 # ╟─91c5e15a-e110-4494-ba6c-dbbc899c5229
 # ╠═1869e008-8cdf-486a-a32c-05f474b59229
-# ╟─f1301f49-bd73-4fb6-9687-aa68c5beb7a8
-# ╠═4c4b56d5-c967-4354-9f5d-3c2610f474ff
-# ╟─b38306f0-61ea-4aa7-a522-d59e5c63db48
 # ╟─e8de1fbc-8034-406c-986c-a0a5e237ff18
+# ╟─b38306f0-61ea-4aa7-a522-d59e5c63db48
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

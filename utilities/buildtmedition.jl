@@ -26,7 +26,7 @@ function writeeditions(bldr, corpus::CitableTextCorpus, outfile)
     end
 
 
-    scholia = filter(cn -> contains(cn.urn.urn, "tlg5026"), tmnodes)
+    scholia = filter(cn -> contains(passagecomponent(cn.urn), "comment"), tmnodes)
     lines = []
     for sch in scholia
         wk = workcomponent(sch.urn)

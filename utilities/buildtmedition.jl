@@ -8,14 +8,29 @@ using EditionBuilders
 using CitableCorpus
 using CitableText
 using CitableObject
+using CorpusConverters
+using TopicsModelsVB
 
 tmbldr = HmtTopicModels.HmtTMBuilder("tm builder", "hmttm")
 xmlurl = "https://raw.githubusercontent.com/hmteditors/composite-summer21/main/data/archive-xml.cex"
 xmlcorpus = CitableCorpus.fromurl(CitableTextCorpus, xmlurl, "|")
 scholia = filter(cn -> endswith(cn.urn.urn, "comment"), xmlcorpus.corpus) |> CitableTextCorpus
-tmfile = "data/topicmodelingedition.cex"
-tmcorp = tmcorpus(xmlcorpus)
+tascholia = tacorpus(scholia)
+update_lexicon!(tascholia)
+update_inverse_index!(tascholia)
 
+
+
+#= Debugging a TextAnalysis corpus
+=#
+
+
+#= Topic modelling
+=#
+tmfile = "data/topicmodelingedition.cex"
+tmcorp = tmcorpus(scholia)
+model = LDA(tmcorp, 9)
+println("Wait right here.")
 #=
 function tidyurns(s)
     tkns = split(s)

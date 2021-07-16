@@ -21,4 +21,11 @@ Features to model:
 
 ## Some useful Pluto notebooks
 
+(Pluto notebooks in the `nbs` directory have names including a semantic version number.)
+
+
+- `termsearch`: see passages with term (anywhere in corpus). Includles TF-IDF measure of term's salience.
+- see distribution of initial n-grams in corpus
+
+
 

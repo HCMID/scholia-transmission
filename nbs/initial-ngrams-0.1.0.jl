@@ -56,16 +56,13 @@ function firstn(s, n)
 end
 
 # ╔═╡ 8e91e0aa-c8d6-4a5f-834f-fe7d511453d8
-md"> Corpora"
+md"> Text corpus"
 
 # ╔═╡ a8c98abd-b5b5-4086-97a1-d3d3c74845af
 archiveurl = "https://raw.githubusercontent.com/hmteditors/composite-summer21/main/data/archive-normed.cex"
 
 # ╔═╡ c323601a-ab5e-44f2-878b-ef0d5c583543
 normalizedcorpus = CitableCorpus.fromurl(CitableTextCorpus, archiveurl, "|")
-
-# ╔═╡ a047dcd9-d340-4cd6-af9c-5a2b56816203
-md"> Useful lists of `CitableNode`s"
 
 # ╔═╡ 18fcc466-688c-413f-ae60-14340e0ce4cc
 # Regularize text content by lowercasing, stripping accent, breathing
@@ -78,9 +75,52 @@ end
 commentaryonly = filter(cn -> endswith(passagecomponent(cn.urn),"comment"), normalizedcorpus.corpus)
 
 
+# ╔═╡ 0042fe1b-fdda-4876-aabb-e91ee11a56e5
+reff = filter(cn -> endswith(passagecomponent(cn.urn), "ref"), normalizedcorpus.corpus)
+
+
+
+# ╔═╡ db1a994f-eb0f-4766-a04a-5bedd7f1446b
+md"> User interface"
+
+# ╔═╡ b52bde91-5f7b-4bef-a663-2bbb80650ba0
+menu = ["all" => "All material in hmt-archive",
+"allburney" => "All scholia in Burney 86",
+"burney86" => "Main scholia of Burney 86",
+"burney86il" => "Interlinear scholia of Burney 86",
+"burney86im" => "Intermarginal scholia of Burney 86",
+"burney86int" => "Interior scholia of Burney 86",
+"allVA" => "All scholia in Venetus A",
+"msA" => "Main scholia of Venetus A",
+"msAim" => "Intermarginal scholia of Venetus A",
+"msAint" => "Interior scholia of Venetus A",
+"msAil" => "Interlinear scholia of Venetus A",
+"msB" => "Scholia of Venetus B",
+"e3" => "Scholia of Escorial, Upsilon 1.1",
+]
+
+# ╔═╡ bd3203ae-3ae4-439b-bd96-aa077f9d76d3
+md"""Manuscript $(@bind ms Select(menu))
+"""
+
+# ╔═╡ 4d26226a-f926-4f44-82ca-b7d584968dae
+# Select nodes matching MS selection
+function nodesforMs()
+	if ms == "all"
+		commentaryonly
+	elseif ms == "allburney"
+		filter(cn -> occursin("burney", cn.urn.urn), commentaryonly)
+	elseif ms == "allVA"
+		filter(cn -> occursin("msA", cn.urn.urn), commentaryonly)
+	else
+		filter(cn -> occursin(string(".",ms,"."), cn.urn.urn), commentaryonly)
+	end
+end
+
 # ╔═╡ a03c6fb3-5b69-4fe7-964f-0494d54f1982
-# Normalize text contenbt of all nodes in scholia commentary
-commentarynormed = map(cn -> CitableNode(cn.urn, normnode(cn)), commentaryonly)
+# Normalize text content of all nodes in scholia commentary
+commentarynormed = map(cn -> CitableNode(cn.urn, normnode(cn)), nodesforMs())
+
 
 # ╔═╡ cb3c30e3-9f3f-4cb1-a3f1-0ce83eac663c
 # Compose list of initial n-gram in normalized scholia comments
@@ -117,34 +157,6 @@ plotcount(counts, labels, lmt)
 # ╔═╡ 4c7d43af-8ddb-4d63-8111-7dd1c2e61186
 md"Number of distinct labels: $(labels |> length)"
 
-# ╔═╡ 0042fe1b-fdda-4876-aabb-e91ee11a56e5
-reff = filter(cn -> endswith(passagecomponent(cn.urn), "ref"), normalizedcorpus.corpus)
-
-
-
-# ╔═╡ db1a994f-eb0f-4766-a04a-5bedd7f1446b
-md"> User interface"
-
-# ╔═╡ b52bde91-5f7b-4bef-a663-2bbb80650ba0
-menu = ["all" => "All material in hmt-archive",
-"allburney" => "All scholia in Burney 86",
-"burney86" => "Main scholia of Burney 86",
-"burney86il" => "Interlinear scholia of Burney 86",
-"burney86im" => "Intermarginal scholia of Burney 86",
-"burney86int" => "Interior scholia of Burney 86",
-"allVA" => "All scholia in Venetus A",
-"msA" => "Main scholia of Venetus A",
-"msAim" => "Intermarginal scholia of Venetus A",
-"msAint" => "Interior scholia of Venetus A",
-"msAil" => "Interlinear scholia of Venetus A",
-"msB" => "Scholia of Venetus B",
-"e3" => "Scholia of Escorial, Upsilon 1.1",
-]
-
-# ╔═╡ bd3203ae-3ae4-439b-bd96-aa077f9d76d3
-md"""Manuscript $(@bind ms Select(menu))
-"""
-
 # ╔═╡ 6d132ef9-4522-402a-b3de-cba093027a4a
 mslabel = begin
 	pairing = filter(pr -> pr[1] == ms, menu)
@@ -156,7 +168,7 @@ end
 begin
 	labelsrc = """### Frequency of $(ncount)-grams in *$mslabel*
 
-Total number of $(ncount)-grams: $(firstwords |> length)
+ $(ncount)-grams for **$(firstwords |> length) scholia**
 
 """
 	Markdown.parse(labelsrc)
@@ -1169,9 +1181,9 @@ version = "0.9.1+5"
 # ╟─8e91e0aa-c8d6-4a5f-834f-fe7d511453d8
 # ╟─a8c98abd-b5b5-4086-97a1-d3d3c74845af
 # ╟─c323601a-ab5e-44f2-878b-ef0d5c583543
-# ╟─a047dcd9-d340-4cd6-af9c-5a2b56816203
 # ╟─18fcc466-688c-413f-ae60-14340e0ce4cc
 # ╟─a03c6fb3-5b69-4fe7-964f-0494d54f1982
+# ╟─4d26226a-f926-4f44-82ca-b7d584968dae
 # ╟─e1591ba9-16d2-45aa-a8a1-50ee7daf0135
 # ╟─0042fe1b-fdda-4876-aabb-e91ee11a56e5
 # ╟─db1a994f-eb0f-4766-a04a-5bedd7f1446b

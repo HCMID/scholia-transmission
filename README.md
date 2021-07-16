@@ -25,7 +25,7 @@ Features to model:
 
 
 - `termsearch`: see passages with term (anywhere in corpus). Includles TF-IDF measure of term's salience.
-- see distribution of initial n-grams in corpus
+- `initial-ngrams`: see distribution of initial n-grams in corpus.
 
 
 

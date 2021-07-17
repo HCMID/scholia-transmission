@@ -81,14 +81,6 @@ md"Downloadable data"
 # ╔═╡ 8dcf39c4-9cb9-446c-8d56-48b410ad1f06
 md"> Format data for download as delimited files"
 
-# ╔═╡ cfabcd3c-eaa2-4834-b2f4-11b6e7ffd6f4
-
-
-# ╔═╡ f7cc2b56-a604-47ac-9d1a-272f50e94415
-function summariescsv()
-	"here"
-end
-
 # ╔═╡ 38cb5b0d-cae5-4b65-bc2b-647eb3cd69ae
 function covarcsv(covarvals)
 	"here"
@@ -173,9 +165,32 @@ with_terminal() do
 	showtopics(model, cols=k, wordstoshow)
 end
 
+# ╔═╡ 4808a47f-c73e-4590-b6ba-db105ed1f8d1
+# Ordered list of top vocab items for a given topic
+function topvocab(topicno)
+	tpc = model.topics[topicno]
+	toplist = []
+	for i in 1:wordstoshow
+		wdix = model.topics[topicno][i]
+		#push!(toplist, model.corp.vocab[model.topics[topicno][tpc[i]])
+		push!(toplist, model.corp.vocab[wdix])
+	end
+	toplist	
+end
+
+# ╔═╡ f7cc2b56-a604-47ac-9d1a-272f50e94415
+function summariescsv()
+	lines = []
+	for i in 1:k
+		vocablist = string(i, ",", join(topvocab(i),","))
+		push!(lines, vocablist)
+	end
+	join(lines,"\n") * "\n"
+end
+
 # ╔═╡ d6968676-c537-482d-a5b8-f3e7c413470a
 md"""
-- *Topic summaries* 
+- *Topic summaries* $(DownloadButton(summariescsv(), "topics-vocab.csv")). Top $wordstoshow terms for each topic.
 - *Topic-vocabulary matrix* $(DownloadButton(topicscsv(model.topics), "topics-vocab.csv")).  Each topic is scored on each vocabulary item (*term*) in the corpus (so here, $k rows with $(length(model.corp.vocab)) columns).
 - *Vocabulary index* $(DownloadButton(vocabcsv(model.corp.vocab), "vocab.csv")).  Index of numeric keys to vocabulary item (*term*) (so here, $(length(model.corp.vocab)) number-string pairs).
 - *Document-topic matrix*  $(DownloadButton(doctopiccsv(model.gamma), "docs-topics.csv")).  Each document is scored on each topic (so here, $(length(model.corp.docs)) rows with $k columns).
@@ -197,11 +212,11 @@ md"""
 # ╠═15da696a-1fe4-40a4-9a92-88e08a8e49b5
 # ╟─e232a0ef-5473-4708-b50f-4f1f43ebee33
 # ╟─c72fab11-3b8f-49f1-9693-60e8dce883bf
-# ╠═d6968676-c537-482d-a5b8-f3e7c413470a
+# ╟─d6968676-c537-482d-a5b8-f3e7c413470a
 # ╟─8dcf39c4-9cb9-446c-8d56-48b410ad1f06
-# ╠═cfabcd3c-eaa2-4834-b2f4-11b6e7ffd6f4
-# ╠═f7cc2b56-a604-47ac-9d1a-272f50e94415
-# ╠═38cb5b0d-cae5-4b65-bc2b-647eb3cd69ae
+# ╟─4808a47f-c73e-4590-b6ba-db105ed1f8d1
+# ╟─f7cc2b56-a604-47ac-9d1a-272f50e94415
+# ╟─38cb5b0d-cae5-4b65-bc2b-647eb3cd69ae
 # ╟─a0e97706-3ef5-4fa6-87b4-1b3f991a581e
 # ╟─299e325f-3b8c-4823-babb-895c8a422d5a
 # ╟─1e3f6da0-f435-4923-a0e3-203bb378c317

@@ -60,7 +60,7 @@ md"""> # Simple topic modeling with Latent Dirichlet Allocation (LDA)
 """
 
 # ╔═╡ c7e2e54a-019d-4f37-a88e-d0158110bc43
-k = 6
+k = 8
 
 # ╔═╡ 9867e9cd-4ed3-45b9-8ccf-f0e2074d9f83
 iterations = 100
@@ -133,10 +133,7 @@ md"> Load corpus formatted for topic modelling"
 url = "https://raw.githubusercontent.com/hmteditors/composite-summer21/main/data/topicmodelingedition.cex"
 
 # ╔═╡ b465f1be-29b8-40f4-96cd-b40c3ab3d326
-fulltmed = CitableCorpus.fromurl(CitableTextCorpus, url, "|")
-
-# ╔═╡ 079dda6c-6eca-49e3-a230-c36b8600868f
-tmed = fulltmed.corpus[1:100] |> CitableTextCorpus
+tmed = CitableCorpus.fromurl(CitableTextCorpus, url, "|")
 
 # ╔═╡ 0c26d794-0a06-4ad0-a244-21ff1c520d18
 tmed.corpus |> length
@@ -223,7 +220,6 @@ md"""
 # ╟─4a8ce796-f3ce-4958-9b2c-593c0d370572
 # ╟─e6405518-efb3-4911-9ca3-a42c0c36ad90
 # ╠═b465f1be-29b8-40f4-96cd-b40c3ab3d326
-# ╠═079dda6c-6eca-49e3-a230-c36b8600868f
 # ╟─0c26d794-0a06-4ad0-a244-21ff1c520d18
 # ╟─a21a75f9-7059-4b16-8d00-dfcf32c0d642
 # ╟─8652843f-65eb-4a42-ae81-a9aec0acef49

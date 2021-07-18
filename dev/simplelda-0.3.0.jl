@@ -36,14 +36,30 @@ begin
 	Pkg.add("DataFrames")
 	using DataFrames
 	
+	Pkg.add("HTTP")
+	using HTTP
 	
 	Pkg.add("Markdown")
 	using Markdown
+	
+	#Pkg.add("CSV")
+	#using CSV
+	
+	
 	
 	md"""
 	Notebook version:  **0.3.0**
 	"""
 	
+end
+
+# ╔═╡ 0aa818b4-b007-4c83-a267-b67b6caaa32a
+srctexturl = "https://raw.githubusercontent.com/hmteditors/composite-summer21/main/data/topicmodelingsource.csv"
+
+# ╔═╡ 9559e418-a1b8-430b-810f-39f7ca12e537
+sourcelines = begin
+	lns = split(String(HTTP.get(srctexturl).body), "\n")
+	lns[2:end]
 end
 
 # ╔═╡ 1876658c-302e-48ad-947e-099a23472e32
@@ -103,12 +119,8 @@ md">### Downloadable data"
 # ╔═╡ 8dcf39c4-9cb9-446c-8d56-48b410ad1f06
 md"> Functions formatting data for download as delimited files"
 
-# ╔═╡ 38cb5b0d-cae5-4b65-bc2b-647eb3cd69ae
-function covarcsv(covarvals)
-	"here"
-end
-
 # ╔═╡ a0e97706-3ef5-4fa6-87b4-1b3f991a581e
+# Compose document-topic matrix
 function doctopiccsv(themodel)
 	lines = []
 	for i in 1:length(themodel.corp)
@@ -116,22 +128,12 @@ function doctopiccsv(themodel)
 		withdoc = push!(scores, i)
 		push!(lines, join(scores,","))
 	end
-	
-	#=
-	for doc in 1:length(gammas)
-		line = []
-		for tpc in 1:k
-			push!(line, gammas[doc][tpc])
-		end
-		push!(lines, join(line, ","))
-	end
-	=#
 	join(lines, "\n") * "\n"
-
 end
 
 
 # ╔═╡ 299e325f-3b8c-4823-babb-895c8a422d5a
+# Compose dictionary of term IDs to strings
 function vocabcsv(vocabdict)
 	lines = []
 	for k in keys(vocabdict)
@@ -215,7 +217,7 @@ Modeling corpus with $(length(model.corp.docs)) *documents* containing $(length(
 train!(model, iter=iterations, tol=0)
 
 # ╔═╡ 4808a47f-c73e-4590-b6ba-db105ed1f8d1
-# Ordered list of top vocab items for a given topic
+# Compose ordered list of top vocab items for a given topic
 function topvocab(topicno)
 	tpc = model.topics[topicno]
 	toplist = []
@@ -228,6 +230,7 @@ function topvocab(topicno)
 end
 
 # ╔═╡ f7cc2b56-a604-47ac-9d1a-272f50e94415
+# Compose CSV summary of topics with top terms
 function summariescsv()
 	lines = []
 	for i in 1:k
@@ -239,11 +242,11 @@ end
 
 # ╔═╡ d6968676-c537-482d-a5b8-f3e7c413470a
 md"""
-- *Topic summaries* $(DownloadButton(summariescsv(), "topics-vocab.csv")). Top $wordstoshow terms for each topic.
+- *Topic summaries* $(DownloadButton(summariescsv(), "topics-vocab.csv")). Top terms for each topic (so here $wordstoshow terms per topic).
 - *Topic-vocabulary matrix* $(DownloadButton(topicscsv(model.topics), "topics-vocab.csv")).  Each topic is scored on each vocabulary item (*term*) in the corpus (so here, $k rows with $(length(model.corp.vocab)) columns).
 - *Vocabulary index* $(DownloadButton(vocabcsv(model.corp.vocab), "vocab.csv")).  Index of numeric keys to vocabulary item (*term*) (so here, $(length(model.corp.vocab)) number-string pairs).
 - *Document-topic matrix*  $(DownloadButton(doctopiccsv(model), "docs-topics.csv")).  Each document is scored on each topic (so here, $(length(model.corp.docs)) rows with $k columns).
-- *Covariance matrix*
+
 
 """
 
@@ -292,7 +295,8 @@ begin
 	for i in 1:doccount
 
 		doc = Int(sortedscores[i, docidx])
-		push!(doctext,"1. `$doc` $(tmed.corpus[doc].text)")
+		push!(doctext,"\n**$i** `$doc` `$(tmed.corpus[doc].text)` \n\n$(sourcelines[doc]) \n\n---\n\n")
+		#push!(doctext,"1. `$doc` $(sourcelines[doc])")
 	end
 	mdlist = join(doctext,"\n")
 	Markdown.parse(mdlist)
@@ -309,6 +313,8 @@ end
 
 # ╔═╡ Cell order:
 # ╟─7ed58b4c-e646-11eb-1526-4b56470a3b62
+# ╟─0aa818b4-b007-4c83-a267-b67b6caaa32a
+# ╟─9559e418-a1b8-430b-810f-39f7ca12e537
 # ╟─1876658c-302e-48ad-947e-099a23472e32
 # ╟─57134c2e-c646-4ec4-bb15-eb1298ca35da
 # ╟─550c4d2d-7c47-4f56-8bc9-f4708ef9aa83
@@ -329,7 +335,6 @@ end
 # ╟─8dcf39c4-9cb9-446c-8d56-48b410ad1f06
 # ╟─4808a47f-c73e-4590-b6ba-db105ed1f8d1
 # ╟─f7cc2b56-a604-47ac-9d1a-272f50e94415
-# ╟─38cb5b0d-cae5-4b65-bc2b-647eb3cd69ae
 # ╟─a0e97706-3ef5-4fa6-87b4-1b3f991a581e
 # ╟─299e325f-3b8c-4823-babb-895c8a422d5a
 # ╟─1e3f6da0-f435-4923-a0e3-203bb378c317

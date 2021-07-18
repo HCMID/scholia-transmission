@@ -1,5 +1,3 @@
-#using Pkg
-#Pkg.activate(".")
 using TopicModelsVB
 using CitableCorpus
 using CorpusConverters
@@ -36,3 +34,46 @@ model = LDA(tmcorp, k)
 train!(model, iter=iterations, tol=0)
 showtopics(model, cols=k, wordstodisplay)
 
+
+function sortablescores(themodel)
+    scores = []
+    for i in 1:length(themodel.corp)
+        docscores = topicdist(themodel, i)
+        push!(docscores, i)
+        push!(scores, docscores)
+    end
+
+    dim1 = length(scores)
+    dim2 = length(scores[1])
+    matrixvals = zeros(Float64, dim1, dim2)
+    for i in 1:dim1
+        for j in 1:dim2
+            matrixvals[i,j] = scores[i][j]
+        end
+    end
+    matrixvals
+end
+queryablescores
+
+function sortbytopic(m, topicnum)
+    sort(m, lt=(x,y)->isless(x[topicnum],y[topicnum]), rev=true, dims = 2)
+end
+
+
+queryablescores = sortablescores(model)
+
+
+using DataFrames
+scoresdf = DataFrame(queryablescores, :auto)
+
+docidx = k + 1
+scoresdf[1, docidx]
+
+doc = scoresdf[1,docidx]
+showdocs(model, Int(doc))
+
+t7 = sort(scoresdf, 7, rev = true)
+topdoc7 = t7[1,docidx]
+showdocs(model, Int(topdoc7))
+
+m

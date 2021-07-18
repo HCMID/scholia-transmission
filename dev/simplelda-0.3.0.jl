@@ -292,7 +292,7 @@ begin
 	for i in 1:doccount
 
 		doc = Int(sortedscores[i, docidx])
-		push!(doctext,"1. $doc $(tmed.corpus[doc].text)")
+		push!(doctext,"1. `$doc` $(tmed.corpus[doc].text)")
 	end
 	mdlist = join(doctext,"\n")
 	Markdown.parse(mdlist)

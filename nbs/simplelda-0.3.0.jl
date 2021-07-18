@@ -53,15 +53,6 @@ begin
 	
 end
 
-# ╔═╡ 0aa818b4-b007-4c83-a267-b67b6caaa32a
-srctexturl = "https://raw.githubusercontent.com/hmteditors/composite-summer21/main/data/topicmodelingsource.csv"
-
-# ╔═╡ 9559e418-a1b8-430b-810f-39f7ca12e537
-sourcelines = begin
-	lns = split(String(HTTP.get(srctexturl).body), "\n")
-	lns[2:end]
-end
-
 # ╔═╡ 1876658c-302e-48ad-947e-099a23472e32
 md"See Pkg status: $(@bind showpkg CheckBox(default=false))"
 
@@ -261,10 +252,15 @@ end
 
 # ╔═╡ 87701aa4-e99f-402d-b0de-8f51de2ee431
 begin
-
+	
+	hdg = ["<th>-</th>"]
+	for wdcount in 1:wordstoshow
+		push!(hdg, string("<th>word ", wdcount, "</th>"))
+	end
+	hdgrow = string("<tr>", join(hdg), "</tr>")
 	
 
-	rows = []
+	rows = [hdgrow]
 	for i in 1:length(model.topics)
 		row = []
 		for j in 1:wordstoshow
@@ -288,6 +284,18 @@ end
 # ╔═╡ eaa66257-7ef0-4482-b922-36416b1c460e
 # Sort document-topic matrix by 
 sortedscores = sort(doctopicdf, parse(Int64,hltopic), rev = true)
+
+# ╔═╡ 82d5e94d-af0a-4cf7-8969-144dbada012a
+md"This is the parallel normalized texts (accents, breathings, no stop words eliminated).  We can use that to display a more legible passage when we want to evaluate what documents scored high or low for particular topics."
+
+# ╔═╡ 0aa818b4-b007-4c83-a267-b67b6caaa32a
+srctexturl = "https://raw.githubusercontent.com/hmteditors/composite-summer21/main/data/topicmodelingsource.csv"
+
+# ╔═╡ 9559e418-a1b8-430b-810f-39f7ca12e537
+sourcelines = begin
+	lns = split(String(HTTP.get(srctexturl).body), "\n")
+	lns[2:end]
+end
 
 # ╔═╡ a7307747-ce6c-4bd9-ab4d-3d5d682af761
 begin
@@ -313,8 +321,6 @@ end
 
 # ╔═╡ Cell order:
 # ╟─7ed58b4c-e646-11eb-1526-4b56470a3b62
-# ╟─0aa818b4-b007-4c83-a267-b67b6caaa32a
-# ╟─9559e418-a1b8-430b-810f-39f7ca12e537
 # ╟─1876658c-302e-48ad-947e-099a23472e32
 # ╟─57134c2e-c646-4ec4-bb15-eb1298ca35da
 # ╟─550c4d2d-7c47-4f56-8bc9-f4708ef9aa83
@@ -350,5 +356,8 @@ end
 # ╟─b465f1be-29b8-40f4-96cd-b40c3ab3d326
 # ╟─0c26d794-0a06-4ad0-a244-21ff1c520d18
 # ╟─8652843f-65eb-4a42-ae81-a9aec0acef49
+# ╟─82d5e94d-af0a-4cf7-8969-144dbada012a
+# ╟─0aa818b4-b007-4c83-a267-b67b6caaa32a
+# ╟─9559e418-a1b8-430b-810f-39f7ca12e537
 # ╟─946c2ffb-c2fe-4279-9e86-18ce3654db5f
 # ╠═e232a0ef-5473-4708-b50f-4f1f43ebee33

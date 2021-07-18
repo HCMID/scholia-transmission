@@ -18,7 +18,7 @@ begin
 	using CitableText, CitableCorpus, EditorsRepo
 	using DataFrames, Plots, PlutoUI, Unicode
 	md"""
-	Notebook version:  **0.1.0**
+	Notebook version:  **0.1.1**
 	
 	"""
 end
@@ -29,12 +29,6 @@ plotly()
 
 # ╔═╡ d714af70-f314-48bb-9a0b-935682e35d6e
 md"># Introductory n-grams in *scholia*"
-
-# ╔═╡ 0e6ee65f-1525-4ac1-9c03-4c87e9d5888a
-md"""n: $(@bind ncount Slider(1:6; default=1, show_value=true))"""
-
-# ╔═╡ 3833f7c1-aa4f-460f-b39b-4a15c0e2b7c3
-md"""Number of words to show: $(@bind lmt Slider(15:500; default=20, show_value=true))"""
 
 # ╔═╡ 4a1142f2-b810-4659-932d-37aba2bafcbf
 md"> Data to graph"
@@ -99,8 +93,8 @@ menu = ["all" => "All material in hmt-archive",
 "e3" => "Scholia of Escorial, Upsilon 1.1",
 ]
 
-# ╔═╡ bd3203ae-3ae4-439b-bd96-aa077f9d76d3
-md"""Manuscript $(@bind ms Select(menu))
+# ╔═╡ 0e6ee65f-1525-4ac1-9c03-4c87e9d5888a
+md"""Value for `n`: $(@bind  ncount NumberField(1:6; default=1)).  Number of words to show: $(@bind  lmt NumberField(15:500; default=25)).  Manuscript $(@bind ms Select(menu))
 """
 
 # ╔═╡ 4d26226a-f926-4f44-82ca-b7d584968dae
@@ -1164,9 +1158,7 @@ version = "0.9.1+5"
 # ╟─863754ac-d0ea-11eb-0a68-83e30f2d48f6
 # ╟─51efa8af-8406-41da-9ff3-fc826b988403
 # ╟─d714af70-f314-48bb-9a0b-935682e35d6e
-# ╟─bd3203ae-3ae4-439b-bd96-aa077f9d76d3
 # ╟─0e6ee65f-1525-4ac1-9c03-4c87e9d5888a
-# ╟─3833f7c1-aa4f-460f-b39b-4a15c0e2b7c3
 # ╟─3c18e06e-bfe3-493e-bcbd-e1f0ab1b2d10
 # ╟─53f2a8cc-d3f9-4b02-b761-7c09d259e943
 # ╟─4a1142f2-b810-4659-932d-37aba2bafcbf

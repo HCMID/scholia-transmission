@@ -59,6 +59,9 @@ md"""> # Simple topic modeling with Latent Dirichlet Allocation (LDA)
 
 """
 
+# ╔═╡ 72489328-3e1f-48eb-95b6-26ff111741aa
+
+
 # ╔═╡ c7e2e54a-019d-4f37-a88e-d0158110bc43
 k = 8
 
@@ -87,8 +90,15 @@ function covarcsv(covarvals)
 end
 
 # ╔═╡ a0e97706-3ef5-4fa6-87b4-1b3f991a581e
-function doctopiccsv(gammas)
+function doctopiccsv(themodel)
 	lines = []
+	for i in 1:length(themodel.corp)
+		scores = topicdist(themodel, i)
+		withdoc = push!(scores, i)
+		push!(lines, join(scores,","))
+	end
+	
+	#=
 	for doc in 1:length(gammas)
 		line = []
 		for tpc in 1:k
@@ -96,7 +106,9 @@ function doctopiccsv(gammas)
 		end
 		push!(lines, join(line, ","))
 	end
+	=#
 	join(lines, "\n") * "\n"
+
 end
 
 
@@ -190,7 +202,7 @@ md"""
 - *Topic summaries* $(DownloadButton(summariescsv(), "topics-vocab.csv")). Top $wordstoshow terms for each topic.
 - *Topic-vocabulary matrix* $(DownloadButton(topicscsv(model.topics), "topics-vocab.csv")).  Each topic is scored on each vocabulary item (*term*) in the corpus (so here, $k rows with $(length(model.corp.vocab)) columns).
 - *Vocabulary index* $(DownloadButton(vocabcsv(model.corp.vocab), "vocab.csv")).  Index of numeric keys to vocabulary item (*term*) (so here, $(length(model.corp.vocab)) number-string pairs).
-- *Document-topic matrix*  $(DownloadButton(doctopiccsv(model.gamma), "docs-topics.csv")).  Each document is scored on each topic (so here, $(length(model.corp.docs)) rows with $k columns).
+- *Document-topic matrix*  $(DownloadButton(doctopiccsv(model), "docs-topics.csv")).  Each document is scored on each topic (so here, $(length(model.corp.docs)) rows with $k columns).
 - *Covariance matrix*
 
 """
@@ -200,6 +212,7 @@ md"""
 # ╟─1876658c-302e-48ad-947e-099a23472e32
 # ╟─57134c2e-c646-4ec4-bb15-eb1298ca35da
 # ╟─550c4d2d-7c47-4f56-8bc9-f4708ef9aa83
+# ╠═72489328-3e1f-48eb-95b6-26ff111741aa
 # ╠═c7e2e54a-019d-4f37-a88e-d0158110bc43
 # ╟─4b840632-0ef4-490f-a9e8-c95184ca7e59
 # ╟─15088ec6-5be1-4eb5-b01a-81af28322a43
@@ -219,7 +232,7 @@ md"""
 # ╟─1e3f6da0-f435-4923-a0e3-203bb378c317
 # ╟─4a8ce796-f3ce-4958-9b2c-593c0d370572
 # ╟─e6405518-efb3-4911-9ca3-a42c0c36ad90
-# ╠═b465f1be-29b8-40f4-96cd-b40c3ab3d326
+# ╟─b465f1be-29b8-40f4-96cd-b40c3ab3d326
 # ╟─0c26d794-0a06-4ad0-a244-21ff1c520d18
 # ╟─a21a75f9-7059-4b16-8d00-dfcf32c0d642
 # ╟─8652843f-65eb-4a42-ae81-a9aec0acef49

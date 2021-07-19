@@ -30,6 +30,10 @@ begin
 	Pkg.add("CitableCorpus")
 	using CitableCorpus
 	
+	
+	Pkg.add("CitableText")
+	using CitableText
+	
 	Pkg.add("TopicModelsVB")
 	using TopicModelsVB
 	
@@ -42,13 +46,9 @@ begin
 	Pkg.add("Markdown")
 	using Markdown
 	
-	#Pkg.add("CSV")
-	#using CSV
-	
-	
-	
+
 	md"""
-	Notebook version:  **0.3.0**
+	Notebook version:  **0.4.0**
 	"""
 	
 end
@@ -76,8 +76,8 @@ md"""> # Simple topic modeling with Latent Dirichlet Allocation (LDA)
 # ╔═╡ dd90da00-a92e-4d1a-a572-d148154d140b
 md"> ### Settings"
 
-# ╔═╡ 999e5a15-2104-460e-9429-6390a88d2c62
-md"**Number of topics to model**: $(@bind  k NumberField(3:30; default=10))"
+# ╔═╡ f022ea86-0cc1-4bbb-a1ea-8dd24b5351cf
+alarm(text, label) = Markdown.MD(Markdown.Admonition("warn", label, [text]))
 
 # ╔═╡ 9867e9cd-4ed3-45b9-8ccf-f0e2074d9f83
 md"**Iterations to train**: $(@bind  iterations NumberField(15:150; default=40))"
@@ -87,22 +87,6 @@ md"> ### Results"
 
 # ╔═╡ 15da696a-1fe4-40a4-9a92-88e08a8e49b5
 md"**Words to show for each topic**: $(@bind  wordstoshow NumberField(4:30; default=10))"
-
-# ╔═╡ 555bab88-808e-487b-8441-9aa2ad3f4309
-md"""
-Results of modeling $k topics after $iterations iterations: top $wordstoshow words for each topic.
-
- 
-"""
-
-# ╔═╡ fd0477cf-3f27-432b-a7ed-366b33c88143
-begin
-	choices = map(i -> string(i), collect(1:k))
-	md"""
-Topic to highlight:  $(@bind hltopic Select(choices))
-Display top $(@bind doccount NumberField(1:20; default=1)) documents.
-"""
-end
 
 # ╔═╡ c72fab11-3b8f-49f1-9693-60e8dce883bf
 md">### Downloadable data"
@@ -156,10 +140,6 @@ md"> Display topic-term summaries"
 # ╔═╡ 679359f2-5d7e-4cd2-b809-c7a7bbada1c7
 md"> Make a queryable DataFrame for document-topic scores"
 
-# ╔═╡ 3fbe0f4e-2b9f-46e2-86cf-0db411e2b123
-# Column beyond last topic indexes the document
-docidx = k + 1	
-
 # ╔═╡ f39b668c-d883-4425-bf37-25ed23594645
 # Given a model, create a matrix of topic scores for each document
 function doctopicmatrix(themodel)
@@ -193,16 +173,87 @@ tmed = CitableCorpus.fromurl(CitableTextCorpus, url, "|")
 # ╔═╡ 0c26d794-0a06-4ad0-a244-21ff1c520d18
 tmed.corpus |> length
 
+# ╔═╡ 1b0e2cda-7efa-4c92-a274-dad8d43d8e8c
+md"> Allow user to select subcorpus by MS"
+
+# ╔═╡ c58eae56-1900-4239-a689-2b78d7c075c0
+bklist = ["1-24","8 only","8-10"]
+
+# ╔═╡ 61effa85-7d7e-43a3-a31c-d3e73c7f5bfb
+menu = ["all" => "All material in hmt-archive",
+"allburney" => "All scholia in Burney 86",
+"burney86" => "Main scholia of Burney 86",
+"burney86il" => "Interlinear scholia of Burney 86",
+"burney86im" => "Intermarginal scholia of Burney 86",
+"burney86int" => "Interior scholia of Burney 86",
+"allVA" => "All scholia in Venetus A",
+"msA" => "Main scholia of Venetus A",
+"msAim" => "Intermarginal scholia of Venetus A",
+"msAint" => "Interior scholia of Venetus A",
+"msAil" => "Interlinear scholia of Venetus A",
+"msB" => "Scholia of Venetus B",
+"e3" => "Scholia of Escorial, Upsilon 1.1",
+]
+
+# ╔═╡ 999e5a15-2104-460e-9429-6390a88d2c62
+md"**Number of topics to model**: $(@bind  k NumberField(3:30; default=10)) **Manuscript**: $(@bind ms Select(menu)) **Books**: $(@bind books Select(bklist))"
+
+# ╔═╡ 555bab88-808e-487b-8441-9aa2ad3f4309
+md"""
+Results of modeling $k topics after $iterations iterations: top $wordstoshow words for each topic.
+
+ 
+"""
+
+# ╔═╡ fd0477cf-3f27-432b-a7ed-366b33c88143
+begin
+	choices = map(i -> string(i), collect(1:k))
+	md"""
+Topic to highlight:  $(@bind hltopic Select(choices))
+Display top $(@bind doccount NumberField(1:20; default=0)) documents.
+"""
+end
+
+# ╔═╡ 3fbe0f4e-2b9f-46e2-86cf-0db411e2b123
+# Column beyond last topic indexes the document
+docidx = k + 1	
+
+# ╔═╡ 5b0c26d2-29ff-42d2-a7f7-82ee46b1ec8f
+function nodesforBooks(commentnodes)
+	if books == "1-24"
+		commentnodes
+	elseif books == "8 only"
+		filter(cn -> startswith(passagecomponent(cn.urn), "8"), commentnodes)
+	elseif books == "8-10"
+		filter(cn -> startswith(passagecomponent(cn.urn), r"[89]|10"), commentnodes)
+	end
+end
+
+# ╔═╡ f4978ab6-76c6-4dc3-bf30-41f065bdbee2
+function nodesforMs(commentnodes)
+	if ms == "all"
+		commentnodes
+	elseif ms == "allburney"
+		filter(cn -> occursin("burney", cn.urn.urn), commentnodes)
+	elseif ms == "allVA"
+		filter(cn -> occursin("msA", cn.urn.urn), commentnodes)
+	else
+		filter(cn -> occursin(string(".",ms,"."), cn.urn.urn), commentnodes)
+	end
+end
+
+# ╔═╡ ac59e282-1cf6-457d-89a3-175a4cba6fbb
+msselection =  begin
+	msnodelist = nodesforMs(tmed.corpus)
+	nodesforBooks(msnodelist) |> CitableTextCorpus
+end
+
+
 # ╔═╡ 8652843f-65eb-4a42-ae81-a9aec0acef49
-tmcorp = tmcorpus(tmed)
+tmcorp = tmcorpus(msselection)
 
 # ╔═╡ 4b840632-0ef4-490f-a9e8-c95184ca7e59
 model = LDA(tmcorp, k)
-
-# ╔═╡ 15088ec6-5be1-4eb5-b01a-81af28322a43
-md"""
-Modeling corpus with $(length(model.corp.docs)) *documents* containing $(length(model.corp.vocab)) distinct *terms*.
-"""
 
 # ╔═╡ 3bd93907-4ab4-4c12-8867-b9f8db27ad4b
 train!(model, iter=iterations, tol=0)
@@ -273,6 +324,13 @@ begin
 	HTML(string("<table>", join(rows), "</table>"))
 end
 
+# ╔═╡ 7142097c-3cfd-4281-a668-5df7419b2cbd
+# Look up weight of given document
+function docwt(docid)
+	wts = topicdist(model, docid)
+	wts[parse(Int64,hltopic)]
+end
+
 # ╔═╡ 2484def8-c908-4c19-8b14-f4a89279f081
 # Create an easily sorted DataFrame for the doc-topic matrix,
 # using auto-generated column names
@@ -285,16 +343,52 @@ end
 # Sort document-topic matrix by 
 sortedscores = sort(doctopicdf, parse(Int64,hltopic), rev = true)
 
+# ╔═╡ f90e24b7-6d41-4cec-afbc-8d87b263cf21
+nrow(doctopicdf)
+
+# ╔═╡ b6bba209-c5a6-405d-acf3-d075438680a6
+md"> Load normalized text to display for easier reading"
+
 # ╔═╡ 82d5e94d-af0a-4cf7-8969-144dbada012a
 md"This is the parallel normalized texts (accents, breathings, no stop words eliminated).  We can use that to display a more legible passage when we want to evaluate what documents scored high or low for particular topics."
 
 # ╔═╡ 0aa818b4-b007-4c83-a267-b67b6caaa32a
-srctexturl = "https://raw.githubusercontent.com/hmteditors/composite-summer21/main/data/topicmodelingsource.csv"
+srctexturl = "https://raw.githubusercontent.com/hmteditors/composite-summer21/main/data/topicmodelingsource.cex"
 
-# ╔═╡ 9559e418-a1b8-430b-810f-39f7ca12e537
-sourcelines = begin
-	lns = split(String(HTTP.get(srctexturl).body), "\n")
-	lns[2:end]
+# ╔═╡ 3df43298-5112-4325-af5c-9a7e6e0afdef
+srccorp = CitableCorpus.fromurl(CitableTextCorpus,srctexturl, "|")
+
+# ╔═╡ d15fe2c1-9ef9-45db-85fb-12c9b89d4f1c
+srcselection =  begin
+	srcnodelist = nodesforMs(srccorp.corpus)
+	nodesforBooks(srcnodelist) |> CitableTextCorpus
+end
+
+# ╔═╡ 15088ec6-5be1-4eb5-b01a-81af28322a43
+begin
+	if length(model.corp.docs) != length(srcselection.corpus)
+	md"""
+Modeling corpus with $(length(model.corp.docs)) *documents* containing $(length(model.corp.vocab)) distinct *terms*.
+
+(**!! Parallel corpus of source texts has $(length(srcselection.corpus)) documents**.)"""
+	
+else
+md"""
+Modeling corpus with $(length(model.corp.docs)) *documents* containing $(length(model.corp.vocab)) distinct *terms*.
+
+"""
+end
+end
+
+# ╔═╡ 8bc57e73-244c-4ea0-b41b-a013fcda6baf
+begin
+	if length(model.corp.docs) != length(srcselection.corpus)
+		
+	alarm(md"""Discrepancies between topic modelling edition  and source text passages""","Error")
+		
+	else
+		md""
+	end
 end
 
 # ╔═╡ a7307747-ce6c-4bd9-ab4d-3d5d682af761
@@ -303,7 +397,9 @@ begin
 	for i in 1:doccount
 
 		doc = Int(sortedscores[i, docidx])
-		push!(doctext,"\n**$i** `$doc` `$(tmed.corpus[doc].text)` \n\n$(sourcelines[doc]) \n\n---\n\n")
+		u = srcselection.corpus[doc].urn
+		wkparts  = split(workcomponent(u),".")
+		push!(doctext,"\n**$i** document `$doc` weight $(docwt(doc)) `$(msselection.corpus[doc].text)` \n\n   **$(wkparts[2]) $(passagecomponent(u))** $(srcselection.corpus[doc].text) \n\n---\n\n")
 		#push!(doctext,"1. `$doc` $(sourcelines[doc])")
 	end
 	mdlist = join(doctext,"\n")
@@ -328,6 +424,8 @@ end
 # ╟─999e5a15-2104-460e-9429-6390a88d2c62
 # ╟─4b840632-0ef4-490f-a9e8-c95184ca7e59
 # ╟─15088ec6-5be1-4eb5-b01a-81af28322a43
+# ╟─8bc57e73-244c-4ea0-b41b-a013fcda6baf
+# ╠═f022ea86-0cc1-4bbb-a1ea-8dd24b5351cf
 # ╟─9867e9cd-4ed3-45b9-8ccf-f0e2074d9f83
 # ╠═3bd93907-4ab4-4c12-8867-b9f8db27ad4b
 # ╟─dd87550c-6b02-404a-8c56-dbf80f22d91f
@@ -347,17 +445,27 @@ end
 # ╟─bf888348-9a5c-435a-a9c1-724fce2b795c
 # ╟─2adb833d-1cc4-45b1-82cc-78a329ac73fe
 # ╟─679359f2-5d7e-4cd2-b809-c7a7bbada1c7
+# ╟─7142097c-3cfd-4281-a668-5df7419b2cbd
 # ╟─3fbe0f4e-2b9f-46e2-86cf-0db411e2b123
 # ╟─eaa66257-7ef0-4482-b922-36416b1c460e
+# ╟─f90e24b7-6d41-4cec-afbc-8d87b263cf21
 # ╟─2484def8-c908-4c19-8b14-f4a89279f081
 # ╟─f39b668c-d883-4425-bf37-25ed23594645
 # ╟─4a8ce796-f3ce-4958-9b2c-593c0d370572
 # ╟─e6405518-efb3-4911-9ca3-a42c0c36ad90
 # ╟─b465f1be-29b8-40f4-96cd-b40c3ab3d326
 # ╟─0c26d794-0a06-4ad0-a244-21ff1c520d18
-# ╟─8652843f-65eb-4a42-ae81-a9aec0acef49
+# ╠═8652843f-65eb-4a42-ae81-a9aec0acef49
+# ╟─1b0e2cda-7efa-4c92-a274-dad8d43d8e8c
+# ╟─ac59e282-1cf6-457d-89a3-175a4cba6fbb
+# ╟─5b0c26d2-29ff-42d2-a7f7-82ee46b1ec8f
+# ╟─f4978ab6-76c6-4dc3-bf30-41f065bdbee2
+# ╟─c58eae56-1900-4239-a689-2b78d7c075c0
+# ╟─61effa85-7d7e-43a3-a31c-d3e73c7f5bfb
+# ╟─b6bba209-c5a6-405d-acf3-d075438680a6
 # ╟─82d5e94d-af0a-4cf7-8969-144dbada012a
 # ╟─0aa818b4-b007-4c83-a267-b67b6caaa32a
-# ╟─9559e418-a1b8-430b-810f-39f7ca12e537
+# ╠═3df43298-5112-4325-af5c-9a7e6e0afdef
+# ╟─d15fe2c1-9ef9-45db-85fb-12c9b89d4f1c
 # ╟─946c2ffb-c2fe-4279-9e86-18ce3654db5f
-# ╠═e232a0ef-5473-4708-b50f-4f1f43ebee33
+# ╟─e232a0ef-5473-4708-b50f-4f1f43ebee33

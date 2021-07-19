@@ -76,6 +76,9 @@ md"""> # Simple topic modeling with Latent Dirichlet Allocation (LDA)
 # ╔═╡ dd90da00-a92e-4d1a-a572-d148154d140b
 md"> ### Settings"
 
+# ╔═╡ 66285fc5-ab70-4715-9342-6c7bd12082ff
+
+
 # ╔═╡ 9867e9cd-4ed3-45b9-8ccf-f0e2074d9f83
 md"**Iterations to train**: $(@bind  iterations NumberField(15:150; default=40))"
 
@@ -252,11 +255,6 @@ tmcorp = tmcorpus(msselection)
 # ╔═╡ 4b840632-0ef4-490f-a9e8-c95184ca7e59
 model = LDA(tmcorp, k)
 
-# ╔═╡ 15088ec6-5be1-4eb5-b01a-81af28322a43
-md"""
-Modeling corpus with $(length(model.corp.docs)) *documents* containing $(length(model.corp.vocab)) distinct *terms*.
-"""
-
 # ╔═╡ 3bd93907-4ab4-4c12-8867-b9f8db27ad4b
 train!(model, iter=iterations, tol=0)
 
@@ -355,13 +353,24 @@ md"> Load normalized text to display for easier reading"
 md"This is the parallel normalized texts (accents, breathings, no stop words eliminated).  We can use that to display a more legible passage when we want to evaluate what documents scored high or low for particular topics."
 
 # ╔═╡ 0aa818b4-b007-4c83-a267-b67b6caaa32a
-srctexturl = "https://raw.githubusercontent.com/hmteditors/composite-summer21/main/data/topicmodelingsource.csv"
+srctexturl = "https://raw.githubusercontent.com/hmteditors/composite-summer21/main/data/topicmodelingsource.cex"
 
-# ╔═╡ 9559e418-a1b8-430b-810f-39f7ca12e537
-sourcelines = begin
-	lns = split(String(HTTP.get(srctexturl).body), "\n")
-	lns[2:end]
+# ╔═╡ 3df43298-5112-4325-af5c-9a7e6e0afdef
+srccorp = CitableCorpus.fromurl(CitableTextCorpus,srctexturl, "|")
+
+# ╔═╡ d15fe2c1-9ef9-45db-85fb-12c9b89d4f1c
+srcselection =  begin
+	srcnodelist = nodesforMs(srccorp.corpus)
+	nodesforBooks(srcnodelist) |> CitableTextCorpus
 end
+
+# ╔═╡ 15088ec6-5be1-4eb5-b01a-81af28322a43
+md"""
+Modeling corpus with $(length(model.corp.docs)) *documents* containing $(length(model.corp.vocab)) distinct *terms*.
+
+
+Parallel source corpus has $(length(srcselection.corpus)) docs. Hmm.
+"""
 
 # ╔═╡ a7307747-ce6c-4bd9-ab4d-3d5d682af761
 begin
@@ -371,12 +380,18 @@ begin
 		doc = Int(sortedscores[i, docidx])
 		u = tmed.corpus[doc].urn
 		wkparts  = split(workcomponent(u),".")
-		push!(doctext,"\n**$i** document `$doc` weight $(docwt(doc)) `$(tmed.corpus[doc].text)` \n\n   **$(wkparts[2]) $(passagecomponent(u))** $(sourcelines[doc]) \n\n---\n\n")
+		push!(doctext,"\n**$i** document `$doc` weight $(docwt(doc)) `$(tmed.corpus[doc].text)` \n\n   **$(wkparts[2]) $(passagecomponent(u))** $(srcselection.corpus[doc].text) \n\n---\n\n")
 		#push!(doctext,"1. `$doc` $(sourcelines[doc])")
 	end
 	mdlist = join(doctext,"\n")
 	Markdown.parse(mdlist)
 
+end
+
+# ╔═╡ 9559e418-a1b8-430b-810f-39f7ca12e537
+sourcelines = begin
+	lns = split(String(HTTP.get(srctexturl).body), "\n")
+	lns[2:end]
 end
 
 # ╔═╡ 946c2ffb-c2fe-4279-9e86-18ce3654db5f
@@ -396,6 +411,7 @@ end
 # ╟─999e5a15-2104-460e-9429-6390a88d2c62
 # ╟─4b840632-0ef4-490f-a9e8-c95184ca7e59
 # ╟─15088ec6-5be1-4eb5-b01a-81af28322a43
+# ╠═66285fc5-ab70-4715-9342-6c7bd12082ff
 # ╟─9867e9cd-4ed3-45b9-8ccf-f0e2074d9f83
 # ╠═3bd93907-4ab4-4c12-8867-b9f8db27ad4b
 # ╟─dd87550c-6b02-404a-8c56-dbf80f22d91f
@@ -403,7 +419,7 @@ end
 # ╟─555bab88-808e-487b-8441-9aa2ad3f4309
 # ╟─87701aa4-e99f-402d-b0de-8f51de2ee431
 # ╟─fd0477cf-3f27-432b-a7ed-366b33c88143
-# ╟─a7307747-ce6c-4bd9-ab4d-3d5d682af761
+# ╠═a7307747-ce6c-4bd9-ab4d-3d5d682af761
 # ╟─c72fab11-3b8f-49f1-9693-60e8dce883bf
 # ╟─d6968676-c537-482d-a5b8-f3e7c413470a
 # ╟─8dcf39c4-9cb9-446c-8d56-48b410ad1f06
@@ -427,7 +443,7 @@ end
 # ╟─0c26d794-0a06-4ad0-a244-21ff1c520d18
 # ╠═8652843f-65eb-4a42-ae81-a9aec0acef49
 # ╟─1b0e2cda-7efa-4c92-a274-dad8d43d8e8c
-# ╟─ac59e282-1cf6-457d-89a3-175a4cba6fbb
+# ╠═ac59e282-1cf6-457d-89a3-175a4cba6fbb
 # ╟─5b0c26d2-29ff-42d2-a7f7-82ee46b1ec8f
 # ╟─f4978ab6-76c6-4dc3-bf30-41f065bdbee2
 # ╟─c58eae56-1900-4239-a689-2b78d7c075c0
@@ -435,6 +451,8 @@ end
 # ╟─b6bba209-c5a6-405d-acf3-d075438680a6
 # ╟─82d5e94d-af0a-4cf7-8969-144dbada012a
 # ╟─0aa818b4-b007-4c83-a267-b67b6caaa32a
-# ╟─9559e418-a1b8-430b-810f-39f7ca12e537
+# ╠═3df43298-5112-4325-af5c-9a7e6e0afdef
+# ╟─d15fe2c1-9ef9-45db-85fb-12c9b89d4f1c
+# ╠═9559e418-a1b8-430b-810f-39f7ca12e537
 # ╟─946c2ffb-c2fe-4279-9e86-18ce3654db5f
 # ╟─e232a0ef-5473-4708-b50f-4f1f43ebee33

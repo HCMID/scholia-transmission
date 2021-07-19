@@ -4,12 +4,22 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : missing
+        el
+    end
+end
+
 # ╔═╡ fcfd9224-e882-11eb-3906-ede987a83eee
 begin
 	using DataFrames
 	using CSV
 	using CitableCorpus
 	using CitableText
+	using PlutoUI
 	md"""
 	Notebook version: **unreleased**
 	"""
@@ -19,6 +29,17 @@ end
 # ╔═╡ c5d44134-1ba9-4bd7-befa-8f28485bcd08
 md"> # Analyze a topic model"
 
+# ╔═╡ 1a717013-77ff-4a4d-821e-10c893d90187
+md"Threshhold: $(@bind thresh  Slider(0.00 : 0.05 : 1.0; default=0.4, show_value=true))"
+
+# ╔═╡ 1edc6914-567b-45a2-856f-34772f22d31d
+thresh
+
+# ╔═╡ f8931f58-9001-4434-8b2c-1bcc631c08f1
+function cutoff(flt)
+	flt > thresh ? 1 : 0
+end
+
 # ╔═╡ a34148ee-18e4-4143-889b-b15fbdc9a684
 md"""
 - load data
@@ -26,6 +47,9 @@ md"""
 - set threshhold for topic
 - count topics > threshhold
 """
+
+# ╔═╡ a9b013db-a0cc-405a-abab-bd6ae33a6fde
+
 
 # ╔═╡ 1587dd17-d704-45c6-a7cc-43c26cdb4e77
 md"""> Build document-topic dataframe
@@ -58,6 +82,37 @@ dtmatrix = begin
 end
 
 
+# ╔═╡ 703be40e-44e5-4377-ba77-c2b68b279cc0
+rawthresholds = begin
+	numtopics = length(dtmatrix[1,:]) - 2
+	threshed = broadcast(cutoff, dtmatrix[:,1:numtopics] )
+	threshed.ms = dtmatrix.ms
+	threshed
+end
+
+# ╔═╡ 37b1b023-c487-49ca-8475-a9f689aee986
+msgroups = groupby(rawthresholds, :ms)
+
+# ╔═╡ 5ff0faef-922d-49f1-b9cd-024de729b5b2
+msgroups[1][:,1] |> sum
+
+# ╔═╡ 615788c1-8615-414d-b284-02789cd3f71b
+msgroups |> length
+
+# ╔═╡ f8881418-2096-483a-8af9-5d9d772c305c
+threshcountsbyms = begin 
+	sums = Dict()
+	for grp in msgroups
+		topictotals = []
+		for i in 1:17
+			push!(topictotals, sum(grp[:,i]))
+		end
+		sums[grp[1,:ms]] = topictotals
+	end
+	sums
+end
+
+
 # ╔═╡ 878c1f47-4abf-4333-872b-017a4c43a7d8
 msids |> length
 
@@ -68,12 +123,14 @@ CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
 CitableCorpus = "cf5ac11a-93ef-4a1a-97a3-f6af101603b5"
 CitableText = "41e66566-473b-49d4-85b7-da83b66615d8"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
 CSV = "~0.8.5"
 CitableCorpus = "~0.3.0"
 CitableText = "~0.9.0"
 DataFrames = "~1.2.0"
+PlutoUI = "~0.7.9"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -323,6 +380,12 @@ version = "1.1.0"
 deps = ["Artifacts", "Dates", "Downloads", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 
+[[PlutoUI]]
+deps = ["Base64", "Dates", "InteractiveUtils", "JSON", "Logging", "Markdown", "Random", "Reexport", "Suppressor"]
+git-tree-sha1 = "44e225d5837e2a2345e69a1d1e01ac2443ff9fcb"
+uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+version = "0.7.9"
+
 [[PooledArrays]]
 deps = ["DataAPI", "Future"]
 git-tree-sha1 = "cde4ce9d6f33219465b55162811d8de8139c0414"
@@ -420,6 +483,11 @@ git-tree-sha1 = "5998faae8c6308acc25c25896562a1e66a3bb038"
 uuid = "9700d1a9-a7c8-5760-9816-a99fda30bb8f"
 version = "1.0.1"
 
+[[Suppressor]]
+git-tree-sha1 = "a819d77f31f83e5792a76081eee1ea6342ab8787"
+uuid = "fd094767-a336-5f1f-9728-57cf17d0bbfb"
+version = "0.2.0"
+
 [[TOML]]
 deps = ["Dates"]
 uuid = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
@@ -484,14 +552,23 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╔═╡ Cell order:
 # ╟─fcfd9224-e882-11eb-3906-ede987a83eee
 # ╟─c5d44134-1ba9-4bd7-befa-8f28485bcd08
+# ╟─1a717013-77ff-4a4d-821e-10c893d90187
+# ╠═f8881418-2096-483a-8af9-5d9d772c305c
+# ╟─1edc6914-567b-45a2-856f-34772f22d31d
+# ╟─f8931f58-9001-4434-8b2c-1bcc631c08f1
+# ╠═37b1b023-c487-49ca-8475-a9f689aee986
+# ╠═5ff0faef-922d-49f1-b9cd-024de729b5b2
+# ╠═615788c1-8615-414d-b284-02789cd3f71b
+# ╠═703be40e-44e5-4377-ba77-c2b68b279cc0
 # ╟─a34148ee-18e4-4143-889b-b15fbdc9a684
+# ╠═a9b013db-a0cc-405a-abab-bd6ae33a6fde
 # ╟─1587dd17-d704-45c6-a7cc-43c26cdb4e77
 # ╟─7ab38bf5-ab8c-42e2-8ab1-d75dabe2ce68
 # ╟─d0ffb941-4fe2-456d-9278-8c4f768329b3
 # ╟─fd5e5e11-eb71-4712-ade1-958a86e7a77f
 # ╟─0ffd0441-6d74-44b4-8d1a-c7bddebfed1f
 # ╟─e3b5565e-6b44-4c26-a780-13748f5b2a17
-# ╠═878c1f47-4abf-4333-872b-017a4c43a7d8
+# ╟─878c1f47-4abf-4333-872b-017a4c43a7d8
 # ╟─28f4dfff-d285-4bad-9953-e0ee63fce825
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

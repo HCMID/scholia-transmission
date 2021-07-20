@@ -34,6 +34,11 @@ md"""> # Analyze a topic model
 > Analyze document-topic distribution by MS from locally saved delimited file.
 """
 
+# ╔═╡ effbeac9-08cf-4e27-a008-190492b5bf11
+#md"Delimited-text file with document-term matrix $(@bind dtfilex FilePicker())"
+md"Add file-picker here."
+
+
 # ╔═╡ f3cc6f16-33fb-4e6f-acd5-97f224034cc1
 # 
 dtfile = string(pwd() |> dirname, "/data/sampletmdata/docs-topics.csv")
@@ -1376,6 +1381,7 @@ version = "0.9.1+5"
 # ╔═╡ Cell order:
 # ╟─fcfd9224-e882-11eb-3906-ede987a83eee
 # ╟─c5d44134-1ba9-4bd7-befa-8f28485bcd08
+# ╟─effbeac9-08cf-4e27-a008-190492b5bf11
 # ╟─f3cc6f16-33fb-4e6f-acd5-97f224034cc1
 # ╟─1a717013-77ff-4a4d-821e-10c893d90187
 # ╟─3aae02b0-26ff-42ae-be3f-886ca71953a7

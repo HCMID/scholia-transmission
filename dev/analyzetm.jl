@@ -23,34 +23,70 @@ begin
 	#using Plots
 	using StatsPlots
 	md"""
-	Notebook version: **unreleased**
+	Notebook version: **0.1.0**
 	"""
 end
 
 
 # ╔═╡ c5d44134-1ba9-4bd7-befa-8f28485bcd08
-md"> # Analyze a topic model"
+md"""> # Analyze a topic model
+>
+> Analyze document-topic distribution by MS from locally saved delimited file.
+"""
+
+# ╔═╡ f3cc6f16-33fb-4e6f-acd5-97f224034cc1
+# 
+dtfile = string(pwd() |> dirname, "/data/sampletmdata/docs-topics.csv")
 
 # ╔═╡ 1a717013-77ff-4a4d-821e-10c893d90187
 md"Threshhold: $(@bind thresh  Slider(0.00 : 0.05 : 1.0; default=0.4, show_value=true))"
 
-# ╔═╡ 056466d4-8cb9-4684-9b0c-e359a2d4678a
-tstme = zeros(Int64, 4, 2)
+# ╔═╡ 681875af-93b8-4126-b4ac-2f466bced64a
+md"Compose labels for plot"
 
-# ╔═╡ 1edc6914-567b-45a2-856f-34772f22d31d
-thresh
+# ╔═╡ 0d48a1ed-bed1-4e0f-9819-b8972981b5c9
+md"> Computing counts"
+
+# ╔═╡ e12ee883-9839-46a7-9034-00024bf6e5a5
+md"Utility functions"
 
 # ╔═╡ f8931f58-9001-4434-8b2c-1bcc631c08f1
+# True if a float value is > than the threshold chosen on the slider
 function cutoff(flt)
 	flt > thresh ? 1 : 0
 end
 
+# ╔═╡ 8f979fcd-8dcc-4b9a-a61e-9b8e8d8ea913
+# Convert a vector of vector of Ints to Matrix.
+# (since we can directly pass a Matrix to plot,
+# this is convenient.)
+function vecvec_to_matrix(vecvec)
+    dim1 = length(vecvec)
+    dim2 = length(vecvec[1])
+    mtrx = zeros(Int64, dim1, dim2)
+    for i in 1:dim1
+        for j in 1:dim2
+			#@warn("Look at $i, $j ")
+            mtrx[i,j] = vecvec[i][j]
+        end
+    end
+    mtrx
+end
+
+
+
 # ╔═╡ 1587dd17-d704-45c6-a7cc-43c26cdb4e77
-md"""> Build document-topic dataframe
+md"""> Build datasets by MS
 """
 
 # ╔═╡ d0ffb941-4fe2-456d-9278-8c4f768329b3
-md"> Load text corpus"
+md"> Load document-topic matrix, and text corpus it is derived from"
+
+# ╔═╡ b0f6b969-5c55-49f5-8e35-038e1315bc43
+md"Load document-topic matrix from delimited file"
+
+# ╔═╡ edc345da-2948-4329-9813-1d334ae34854
+md"Load text corpus"
 
 # ╔═╡ fd5e5e11-eb71-4712-ade1-958a86e7a77f
 srctexturl = "https://raw.githubusercontent.com/hmteditors/composite-summer21/main/data/topicmodelingsource.cex"
@@ -58,7 +94,11 @@ srctexturl = "https://raw.githubusercontent.com/hmteditors/composite-summer21/ma
 # ╔═╡ 0ffd0441-6d74-44b4-8d1a-c7bddebfed1f
 srccorp = CitableCorpus.fromurl(CitableTextCorpus,srctexturl, "|")
 
+# ╔═╡ 3341e72d-a2d6-419f-86a0-d17dae812029
+md"Map elements of text corpus to MS identifiers"
+
 # ╔═╡ 28f4dfff-d285-4bad-9953-e0ee63fce825
+# Extract second element of URN's work component to get MS identifier
 function msid(u)
 	parts = split(workcomponent(u),".")
 	parts[2]
@@ -69,17 +109,19 @@ msids = map(cn -> msid(cn.urn), srccorp.corpus)
 
 # ╔═╡ 7ab38bf5-ab8c-42e2-8ab1-d75dabe2ce68
 dtmatrix = begin
-	f = string(pwd() |> dirname, "/data/sampletmdata/docs-topics.csv")
-	rawdf = CSV.File(f; delim=",") |> DataFrame
+
+	rawdf = CSV.File(dtfile; delim=",") |> DataFrame
 	rawdf.ms = msids
 	rawdf
 end
 
 
 # ╔═╡ 3aae02b0-26ff-42ae-be3f-886ca71953a7
+# All columns of the matrix are topic data except for 2: MS label, and doc id
 numtopics = length(dtmatrix[1,:]) - 2
 
 # ╔═╡ de7aaed2-66bb-4c28-956d-e7a1291cff86
+# Labels for numbered topics
 topiclabels = begin
 	lbls = []
 	for i in 1:numtopics
@@ -89,8 +131,9 @@ topiclabels = begin
 end
 
 # ╔═╡ 703be40e-44e5-4377-ba77-c2b68b279cc0
+# For every cell in document-topic matrix, value is 1 if above threshhold,
+# 0 if below threshold
 rawthresholds = begin
-	
 	threshed = broadcast(cutoff, dtmatrix[:,1:numtopics] )
 	threshed.ms = dtmatrix.ms
 	threshed
@@ -100,6 +143,7 @@ end
 msgroups = groupby(rawthresholds, :ms)
 
 # ╔═╡ f8881418-2096-483a-8af9-5d9d772c305c
+# For each MS group, total up counts of scholia for each topic
 threshcountsbyms = begin 
 	sums = Dict()
 	for grp in msgroups
@@ -113,75 +157,34 @@ threshcountsbyms = begin
 end
 
 
-# ╔═╡ c92b1403-4c7f-49c7-a998-c3e1ca8b080a
-threshcountsbyms|> length
-
 # ╔═╡ ea69894f-a717-4023-b728-52acd4970424
+# Alphabetically sorted list of MS sigla
 mslist = keys(threshcountsbyms) |> collect |> sort
 
+# ╔═╡ c5c7a602-f57c-41d9-91c9-e400466b1e7b
+md"""
+Distribution of $numtopics topics across $(length(mslist)) manuscripts.
+"""
+
 # ╔═╡ 3b30b8a4-08b2-47e4-8a8e-79e2fd4c077b
+
 mscounts = begin
-	#mslist = keys(threshcountsbyms) |> collect |> sort
 	tempcounts = []
 	for siglum in mslist
 		topiccounts = []
-		#push!(sizelist, length(threshcountsbyms[k]))
 		for tpc in threshcountsbyms[siglum]
 			push!(topiccounts, tpc)
 		end
 		push!(tempcounts, topiccounts)
 	end
-	#groupedbar(mscounts)
 	tempcounts
 end
 
-# ╔═╡ a8d8be15-5f05-41e3-aeae-59183a12a4ad
-begin
-	groupedbar([mscounts[1]  mscounts[2] ], bar_position = :stack, xticks=(1:2, mslist[1:2])) #xticks=(1:length(mslist), mslist))
-end
+# ╔═╡ 73a2f0f7-9692-41fc-acf7-4ae97522c587
+plotdatam = vecvec_to_matrix(mscounts)
 
-# ╔═╡ 373db41c-d87a-4809-b7a9-90cf1e2160dd
-[ mscounts[1]' mscounts[2]']
-
-# ╔═╡ afd71af1-ef03-4a3c-a079-0bde6a1123a2
-countsdf = begin
-	df = DataFrame()
-	for i in 1:length(mscounts)
-		mscount = mscounts[1]
-		lbl = string("topic ", i)
-		df.lbl = mscount
-		
-	end
-	df
-end
-
-# ╔═╡ 7d8feb12-3ba7-4fd8-aaad-85a9f9ae2765
-mscounts
-
-# ╔═╡ fa7cda80-8e1b-427d-8add-0fed0224a44b
-mscounts[1] |> length
-
-
-# ╔═╡ bc9f36d3-6eb5-49ae-86e2-7cc9f9a3e212
-topiccounts = begin
-	#mslist = keys(threshcountsbyms) |> collect |> sort
-	tpcs = zeros(Int64, numtopics, length(mslist))
-
-	for siglum in mslist
-	for tpc in threshcountsbyms[siglum]
-		countsperms = []
-	
-			countsperms = []
-			#push!(topiccounts, tpc)
-		end
-		#push!(tpc, countsperms)
-	end
-	#groupedbar(mscounts)
-	tpcs
-end
-
-# ╔═╡ 878c1f47-4abf-4333-872b-017a4c43a7d8
-msids |> length
+# ╔═╡ fffe09c6-c05e-4f3e-a501-96ce2ae5a01b
+groupedbar(plotdatam; bar_position = :stack, xticks=(1:length(mslist), mslist),  xrotation=45)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1373,31 +1376,32 @@ version = "0.9.1+5"
 # ╔═╡ Cell order:
 # ╟─fcfd9224-e882-11eb-3906-ede987a83eee
 # ╟─c5d44134-1ba9-4bd7-befa-8f28485bcd08
+# ╟─f3cc6f16-33fb-4e6f-acd5-97f224034cc1
 # ╟─1a717013-77ff-4a4d-821e-10c893d90187
-# ╟─f8881418-2096-483a-8af9-5d9d772c305c
-# ╟─c92b1403-4c7f-49c7-a998-c3e1ca8b080a
-# ╠═a8d8be15-5f05-41e3-aeae-59183a12a4ad
-# ╠═056466d4-8cb9-4684-9b0c-e359a2d4678a
-# ╠═373db41c-d87a-4809-b7a9-90cf1e2160dd
-# ╠═de7aaed2-66bb-4c28-956d-e7a1291cff86
-# ╠═ea69894f-a717-4023-b728-52acd4970424
+# ╟─3aae02b0-26ff-42ae-be3f-886ca71953a7
+# ╟─c5c7a602-f57c-41d9-91c9-e400466b1e7b
+# ╟─fffe09c6-c05e-4f3e-a501-96ce2ae5a01b
+# ╟─681875af-93b8-4126-b4ac-2f466bced64a
+# ╟─ea69894f-a717-4023-b728-52acd4970424
+# ╟─de7aaed2-66bb-4c28-956d-e7a1291cff86
+# ╟─0d48a1ed-bed1-4e0f-9819-b8972981b5c9
 # ╠═3b30b8a4-08b2-47e4-8a8e-79e2fd4c077b
-# ╠═afd71af1-ef03-4a3c-a079-0bde6a1123a2
-# ╠═7d8feb12-3ba7-4fd8-aaad-85a9f9ae2765
-# ╠═bc9f36d3-6eb5-49ae-86e2-7cc9f9a3e212
-# ╠═fa7cda80-8e1b-427d-8add-0fed0224a44b
-# ╟─1edc6914-567b-45a2-856f-34772f22d31d
+# ╟─703be40e-44e5-4377-ba77-c2b68b279cc0
+# ╟─e12ee883-9839-46a7-9034-00024bf6e5a5
 # ╟─f8931f58-9001-4434-8b2c-1bcc631c08f1
-# ╠═37b1b023-c487-49ca-8475-a9f689aee986
-# ╠═703be40e-44e5-4377-ba77-c2b68b279cc0
-# ╠═3aae02b0-26ff-42ae-be3f-886ca71953a7
+# ╟─8f979fcd-8dcc-4b9a-a61e-9b8e8d8ea913
+# ╟─73a2f0f7-9692-41fc-acf7-4ae97522c587
 # ╟─1587dd17-d704-45c6-a7cc-43c26cdb4e77
-# ╟─7ab38bf5-ab8c-42e2-8ab1-d75dabe2ce68
+# ╟─f8881418-2096-483a-8af9-5d9d772c305c
+# ╟─37b1b023-c487-49ca-8475-a9f689aee986
 # ╟─d0ffb941-4fe2-456d-9278-8c4f768329b3
+# ╟─b0f6b969-5c55-49f5-8e35-038e1315bc43
+# ╟─7ab38bf5-ab8c-42e2-8ab1-d75dabe2ce68
+# ╟─edc345da-2948-4329-9813-1d334ae34854
 # ╟─fd5e5e11-eb71-4712-ade1-958a86e7a77f
 # ╟─0ffd0441-6d74-44b4-8d1a-c7bddebfed1f
+# ╟─3341e72d-a2d6-419f-86a0-d17dae812029
 # ╟─e3b5565e-6b44-4c26-a780-13748f5b2a17
-# ╟─878c1f47-4abf-4333-872b-017a4c43a7d8
 # ╟─28f4dfff-d285-4bad-9953-e0ee63fce825
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

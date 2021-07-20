@@ -27,5 +27,5 @@ Features to model:
 - `termsearch`: see passages with term (anywhere in corpus). Includles TF-IDF measure of term's salience.
 - `initial-ngrams`: see distribution of initial n-grams in corpus.
 - `simplelda`: build topic models using LDA
-
+- `analyzetm`: load document-term data from delimited file and visualize distribution of topics by MS
 

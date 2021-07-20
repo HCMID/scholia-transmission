@@ -28,17 +28,14 @@ begin
 end
 
 
-# ╔═╡ f084c7c5-9721-484a-8fad-d4e430563909
-#plotly()
-
 # ╔═╡ c5d44134-1ba9-4bd7-befa-8f28485bcd08
 md"> # Analyze a topic model"
 
 # ╔═╡ 1a717013-77ff-4a4d-821e-10c893d90187
 md"Threshhold: $(@bind thresh  Slider(0.00 : 0.05 : 1.0; default=0.4, show_value=true))"
 
-# ╔═╡ de7aaed2-66bb-4c28-956d-e7a1291cff86
-
+# ╔═╡ 056466d4-8cb9-4684-9b0c-e359a2d4678a
+tstme = zeros(Int64, 4, 2)
 
 # ╔═╡ 1edc6914-567b-45a2-856f-34772f22d31d
 thresh
@@ -53,7 +50,7 @@ md"""> Build document-topic dataframe
 """
 
 # ╔═╡ d0ffb941-4fe2-456d-9278-8c4f768329b3
-md"Load text corpus"
+md"> Load text corpus"
 
 # ╔═╡ fd5e5e11-eb71-4712-ade1-958a86e7a77f
 srctexturl = "https://raw.githubusercontent.com/hmteditors/composite-summer21/main/data/topicmodelingsource.cex"
@@ -79,9 +76,21 @@ dtmatrix = begin
 end
 
 
+# ╔═╡ 3aae02b0-26ff-42ae-be3f-886ca71953a7
+numtopics = length(dtmatrix[1,:]) - 2
+
+# ╔═╡ de7aaed2-66bb-4c28-956d-e7a1291cff86
+topiclabels = begin
+	lbls = []
+	for i in 1:numtopics
+		push!(lbls, string("Topic ", i))
+	end
+	lbls
+end
+
 # ╔═╡ 703be40e-44e5-4377-ba77-c2b68b279cc0
 rawthresholds = begin
-	numtopics = length(dtmatrix[1,:]) - 2
+	
 	threshed = broadcast(cutoff, dtmatrix[:,1:numtopics] )
 	threshed.ms = dtmatrix.ms
 	threshed
@@ -111,26 +120,65 @@ threshcountsbyms|> length
 mslist = keys(threshcountsbyms) |> collect |> sort
 
 # ╔═╡ 3b30b8a4-08b2-47e4-8a8e-79e2fd4c077b
-begin
+mscounts = begin
 	#mslist = keys(threshcountsbyms) |> collect |> sort
-	mscounts = []
+	tempcounts = []
 	for siglum in mslist
 		topiccounts = []
 		#push!(sizelist, length(threshcountsbyms[k]))
 		for tpc in threshcountsbyms[siglum]
 			push!(topiccounts, tpc)
 		end
-		push!(mscounts, topiccounts)
+		push!(tempcounts, topiccounts)
 	end
 	#groupedbar(mscounts)
-	mscounts
+	tempcounts
 end
 
 # ╔═╡ a8d8be15-5f05-41e3-aeae-59183a12a4ad
-groupedbar([mscounts[1] mscounts[2] ], bar_position = :stack, label = [mslist[1] mslist[2]])
+begin
+	groupedbar([mscounts[1]  mscounts[2] ], bar_position = :stack, xticks=(1:2, mslist[1:2])) #xticks=(1:length(mslist), mslist))
+end
+
+# ╔═╡ 373db41c-d87a-4809-b7a9-90cf1e2160dd
+[ mscounts[1]' mscounts[2]']
+
+# ╔═╡ afd71af1-ef03-4a3c-a079-0bde6a1123a2
+countsdf = begin
+	df = DataFrame()
+	for i in 1:length(mscounts)
+		mscount = mscounts[1]
+		lbl = string("topic ", i)
+		df.lbl = mscount
+		
+	end
+	df
+end
+
+# ╔═╡ 7d8feb12-3ba7-4fd8-aaad-85a9f9ae2765
+mscounts
 
 # ╔═╡ fa7cda80-8e1b-427d-8add-0fed0224a44b
-mscounts
+mscounts[1] |> length
+
+
+# ╔═╡ bc9f36d3-6eb5-49ae-86e2-7cc9f9a3e212
+topiccounts = begin
+	#mslist = keys(threshcountsbyms) |> collect |> sort
+	tpcs = zeros(Int64, numtopics, length(mslist))
+
+	for siglum in mslist
+	for tpc in threshcountsbyms[siglum]
+		countsperms = []
+	
+			countsperms = []
+			#push!(topiccounts, tpc)
+		end
+		#push!(tpc, countsperms)
+	end
+	#groupedbar(mscounts)
+	tpcs
+end
 
 # ╔═╡ 878c1f47-4abf-4333-872b-017a4c43a7d8
 msids |> length
@@ -1323,21 +1371,26 @@ version = "0.9.1+5"
 """
 
 # ╔═╡ Cell order:
-# ╠═fcfd9224-e882-11eb-3906-ede987a83eee
-# ╠═f084c7c5-9721-484a-8fad-d4e430563909
+# ╟─fcfd9224-e882-11eb-3906-ede987a83eee
 # ╟─c5d44134-1ba9-4bd7-befa-8f28485bcd08
 # ╟─1a717013-77ff-4a4d-821e-10c893d90187
 # ╟─f8881418-2096-483a-8af9-5d9d772c305c
 # ╟─c92b1403-4c7f-49c7-a998-c3e1ca8b080a
 # ╠═a8d8be15-5f05-41e3-aeae-59183a12a4ad
+# ╠═056466d4-8cb9-4684-9b0c-e359a2d4678a
+# ╠═373db41c-d87a-4809-b7a9-90cf1e2160dd
 # ╠═de7aaed2-66bb-4c28-956d-e7a1291cff86
 # ╠═ea69894f-a717-4023-b728-52acd4970424
 # ╠═3b30b8a4-08b2-47e4-8a8e-79e2fd4c077b
+# ╠═afd71af1-ef03-4a3c-a079-0bde6a1123a2
+# ╠═7d8feb12-3ba7-4fd8-aaad-85a9f9ae2765
+# ╠═bc9f36d3-6eb5-49ae-86e2-7cc9f9a3e212
 # ╠═fa7cda80-8e1b-427d-8add-0fed0224a44b
 # ╟─1edc6914-567b-45a2-856f-34772f22d31d
 # ╟─f8931f58-9001-4434-8b2c-1bcc631c08f1
 # ╠═37b1b023-c487-49ca-8475-a9f689aee986
 # ╠═703be40e-44e5-4377-ba77-c2b68b279cc0
+# ╠═3aae02b0-26ff-42ae-be3f-886ca71953a7
 # ╟─1587dd17-d704-45c6-a7cc-43c26cdb4e77
 # ╟─7ab38bf5-ab8c-42e2-8ab1-d75dabe2ce68
 # ╟─d0ffb941-4fe2-456d-9278-8c4f768329b3

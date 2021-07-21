@@ -21,7 +21,7 @@ begin
 	using Unicode
 	
 	md"""
-	Notebook version: **0.1.0**
+	Notebook version: **0.1.1**
 	"""
 end
 
@@ -126,7 +126,7 @@ scholia |> length
 
 # ╔═╡ 3e7e7cc4-0bca-4f06-9222-2bdbdba8648e
 stripped = begin
-	map(cn -> CitableNode(cn.urn, Unicode.normalize(cn.text; stripmark=true)),  msselection)
+	map(cn -> CitableNode(cn.urn, lowercase(Unicode.normalize(cn.text; stripmark=true))),  msselection)
 end
 
 # ╔═╡ 47f10449-6cc2-42f1-a824-98a0e9385f69

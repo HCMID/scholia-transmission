@@ -38,8 +38,12 @@ md"""> # String search on text of HMT *scholia*
 > - Choose to search full corpus of Lysias, or just Lysias 1.
 """
 
-# ╔═╡ 4ef56c44-b27f-443d-a36d-c1a198a5c092
-md"Show passages $(@bind showme CheckBox(default=false))"
+# ╔═╡ 81042b67-7892-4f2a-ac2d-19b21d47c410
+md"""
+"""
+
+# ╔═╡ 0d293142-6e83-43be-a7a2-b410d53408ac
+md"> Format delimited"
 
 # ╔═╡ 9df7b364-5a92-4520-83d7-76f2ed1b0b8f
 md"> Find and format results"
@@ -140,14 +144,28 @@ rawmatch = begin
 	end
 end
 
+# ╔═╡ 255fabac-072c-46d9-95d4-c1f9ac8058d2
+function delimited()
+	if isnothing(rawmatch)
+		""
+	else
+		lines = ["urn|text"]
+		for nd in rawmatch
+			push!(lines, string(nd.urn.urn, "|", nd.text))
+		end
+		join(lines,"\n")
+	end
+end
+
 # ╔═╡ 318f3c0a-1930-43fd-824b-2354067329ab
 begin
 	if isnothing(rawmatch)
 		md""
 	else
-		md"""
-		Search for *$(srchstripped)* matches **$(length(rawmatch))** "documents" in corpus of **$(length(msselection))**
-		"""
+		md"""Results:
+- Search for *$(srchstripped)* matches **$(length(rawmatch))** "documents" in corpus of **$(length(msselection))**
+- *Show passages*: $(@bind showme CheckBox(default=false)) *Save results*:  $(DownloadButton(delimited(), "searchmatches.csv")).
+"""
 	end
 end
 
@@ -198,6 +216,7 @@ begin
 		for i in 1:length(rawmatch)
 			push!(lines, labelledpsg(i, srcnodes[i]))		
 			push!(lines, formatmatch(srchstripped, rawmatch[i].text))
+			push!(lines, "<hr/>")
 		end
 		HTML(join(lines))
 	else
@@ -645,8 +664,10 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─3621f458-e9bb-11eb-0fa3-b5c88b3c3081
 # ╟─e62b3d65-b836-4cb2-9999-22e677b84316
 # ╟─318f3c0a-1930-43fd-824b-2354067329ab
-# ╟─4ef56c44-b27f-443d-a36d-c1a198a5c092
+# ╟─81042b67-7892-4f2a-ac2d-19b21d47c410
 # ╟─78bb6c66-fe2f-40db-9574-93fe11530b26
+# ╟─0d293142-6e83-43be-a7a2-b410d53408ac
+# ╟─255fabac-072c-46d9-95d4-c1f9ac8058d2
 # ╟─9df7b364-5a92-4520-83d7-76f2ed1b0b8f
 # ╟─cb526052-9191-49c4-bf10-943efd411064
 # ╟─261b8169-3baa-47d2-be76-46b3a5c26e68

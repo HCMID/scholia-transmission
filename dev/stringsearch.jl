@@ -38,6 +38,9 @@ md"""> # String search on text of HMT *scholia*
 > - Choose to search full corpus of Lysias, or just Lysias 1.
 """
 
+# ╔═╡ 4ef56c44-b27f-443d-a36d-c1a198a5c092
+md"Show passages $(@bind showme CheckBox(default=false))"
+
 # ╔═╡ 9df7b364-5a92-4520-83d7-76f2ed1b0b8f
 md"> Find and format results"
 
@@ -187,15 +190,20 @@ end
 # ╔═╡ 78bb6c66-fe2f-40db-9574-93fe11530b26
 begin
 	lines = []
+
 	if isnothing(rawmatch)
 		md""
-	else
+		
+	elseif showme
 		for i in 1:length(rawmatch)
 			push!(lines, labelledpsg(i, srcnodes[i]))		
 			push!(lines, formatmatch(srchstripped, rawmatch[i].text))
 		end
 		HTML(join(lines))
+	else
+		md""
 	end
+	
 end
 
 # ╔═╡ ee22e94e-3faa-4a6a-8853-fcb1c0ad1eb4
@@ -637,6 +645,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─3621f458-e9bb-11eb-0fa3-b5c88b3c3081
 # ╟─e62b3d65-b836-4cb2-9999-22e677b84316
 # ╟─318f3c0a-1930-43fd-824b-2354067329ab
+# ╟─4ef56c44-b27f-443d-a36d-c1a198a5c092
 # ╟─78bb6c66-fe2f-40db-9574-93fe11530b26
 # ╟─9df7b364-5a92-4520-83d7-76f2ed1b0b8f
 # ╟─cb526052-9191-49c4-bf10-943efd411064

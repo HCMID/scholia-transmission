@@ -20,7 +20,7 @@ begin
 	using RDatasets
 	using PlutoUI
 	md"""
-	Demo notebook version: 0.1.0
+	Demo notebook version: 1.0.0
 	"""
 end
 
@@ -90,10 +90,10 @@ result = kmeans(features, 3)
 begin
 	if mark
 		scatter(iris.PetalLength, iris.PetalWidth, marker_z=result.assignments,
-        color=:lightrainbow, legend=false, markershape=markershapes)
+        color=:lightrainbow, legend=false, markershape=markershapes, xlabel="Petal length", ylabel="Petal width")
 	else
 		scatter(iris.PetalLength, iris.PetalWidth, marker_z=result.assignments,
-        color=:lightrainbow, legend=false)
+        color=:lightrainbow, legend=false, xlabel="Petal length", ylabel="Petal width")
 	end
 end
 

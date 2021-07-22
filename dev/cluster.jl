@@ -4,15 +4,58 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : missing
+        el
+    end
+end
+
 # ╔═╡ 88c52dee-eb0a-11eb-197f-1fa02b3a1335
 begin
 	using Clustering
 	using Plots
 	using RDatasets
+	using PlutoUI
+	md"""
+	Demo notebook version: 0.1.0
+	"""
 end
 
 # ╔═╡ 0fdff3f4-33c4-4f11-842c-184dda0b06b9
-md"Clustering with the famous iris dataset"
+md"# Clustering with the famous iris dataset"
+
+# ╔═╡ 9815f88f-d9bb-494b-8b13-cf921b164fed
+md"Mark species by marker shape $(@bind mark CheckBox())"
+
+# ╔═╡ 509a2bad-eea1-4388-ad23-0be4162fc65f
+begin
+	if mark
+		md"""**Shapes**:
+		
+- cross == setosa
+- pentagon == versicolor
+- triangle == 	virginica	
+		
+"""		
+	else
+		md""
+	end
+end
+
+# ╔═╡ a264daad-b5dc-40fa-b1f3-2a9c5362151e
+md"""> ## How it's done
+>
+> 1. Load dataset, extract 4 numeric features.
+> 2. Assign marker shape for each point based on its species.
+> 3. Cluster data.
+
+"""
+
+# ╔═╡ 6d448250-f0af-4d39-8b8a-20187c9a8d45
+md"**1**. Load dataset and extact 4 numeric features"
 
 # ╔═╡ efa10683-a2ef-4e9e-b877-4c3fbb85dd2a
 iris = dataset("datasets", "iris")
@@ -20,23 +63,52 @@ iris = dataset("datasets", "iris")
 # ╔═╡ 0104055f-b360-43f3-8e3d-b2950f0182d2
 features = collect(Matrix(iris[:, 1:4])')
 
+# ╔═╡ 84ee8ff0-d9a1-4ee1-851d-8e27d6c013d3
+md"**2**.  Assign marker shape based on its species"
+
+# ╔═╡ ce2234d3-98f5-4657-8e53-bfedef5e7933
+function markerforspecies(s)
+	if s == "setosa"
+		:cross
+	elseif s == "versicolor"
+		:pentagon
+	else
+		:rtriangle
+	end
+end
+
+# ╔═╡ cd453adc-bc11-41fc-9172-0bc919281e0c
+markershapes = map(s -> markerforspecies(s), iris[:,:Species])
+
+# ╔═╡ 38481847-80cf-49cf-baaa-e8b0b947949b
+md"**3**. Compute `Kmeans` clustering for 3 clusters"
+
 # ╔═╡ 13880339-25b5-4f90-91e2-6b8b99c1925c
 result = kmeans(features, 3)
 
 # ╔═╡ 9a320ec3-1f8a-4283-817e-12b63e41e4a8
-scatter(iris.PetalLength, iris.PetalWidth, marker_z=result.assignments,
+begin
+	if mark
+		scatter(iris.PetalLength, iris.PetalWidth, marker_z=result.assignments,
+        color=:lightrainbow, legend=false, markershape=markershapes)
+	else
+		scatter(iris.PetalLength, iris.PetalWidth, marker_z=result.assignments,
         color=:lightrainbow, legend=false)
+	end
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 Clustering = "aaaa29a8-35af-508c-8bc3-b662a17a0fe5"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 RDatasets = "ce6b1742-4840-55fa-b093-852dadbb1d8b"
 
 [compat]
 Clustering = "~0.14.2"
 Plots = "~1.19.3"
+PlutoUI = "~0.7.9"
 RDatasets = "~0.7.5"
 """
 
@@ -565,6 +637,12 @@ git-tree-sha1 = "1bbbb5670223d48e124b388dee62477480e23234"
 uuid = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 version = "1.19.3"
 
+[[PlutoUI]]
+deps = ["Base64", "Dates", "InteractiveUtils", "JSON", "Logging", "Markdown", "Random", "Reexport", "Suppressor"]
+git-tree-sha1 = "44e225d5837e2a2345e69a1d1e01ac2443ff9fcb"
+uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+version = "0.7.9"
+
 [[PooledArrays]]
 deps = ["DataAPI", "Future"]
 git-tree-sha1 = "cde4ce9d6f33219465b55162811d8de8139c0414"
@@ -708,6 +786,11 @@ deps = ["Dates", "UUIDs"]
 git-tree-sha1 = "e36adc471280e8b346ea24c5c87ba0571204be7a"
 uuid = "856f2bd8-1eba-4b0a-8007-ebc267875bd4"
 version = "1.7.2"
+
+[[Suppressor]]
+git-tree-sha1 = "a819d77f31f83e5792a76081eee1ea6342ab8787"
+uuid = "fd094767-a336-5f1f-9728-57cf17d0bbfb"
+version = "0.2.0"
 
 [[TOML]]
 deps = ["Dates"]
@@ -971,9 +1054,17 @@ version = "0.9.1+5"
 # ╔═╡ Cell order:
 # ╟─88c52dee-eb0a-11eb-197f-1fa02b3a1335
 # ╟─0fdff3f4-33c4-4f11-842c-184dda0b06b9
+# ╟─9815f88f-d9bb-494b-8b13-cf921b164fed
+# ╟─509a2bad-eea1-4388-ad23-0be4162fc65f
+# ╟─9a320ec3-1f8a-4283-817e-12b63e41e4a8
+# ╟─a264daad-b5dc-40fa-b1f3-2a9c5362151e
+# ╟─6d448250-f0af-4d39-8b8a-20187c9a8d45
 # ╟─efa10683-a2ef-4e9e-b877-4c3fbb85dd2a
 # ╟─0104055f-b360-43f3-8e3d-b2950f0182d2
+# ╟─84ee8ff0-d9a1-4ee1-851d-8e27d6c013d3
+# ╟─cd453adc-bc11-41fc-9172-0bc919281e0c
+# ╠═ce2234d3-98f5-4657-8e53-bfedef5e7933
+# ╟─38481847-80cf-49cf-baaa-e8b0b947949b
 # ╟─13880339-25b5-4f90-91e2-6b8b99c1925c
-# ╠═9a320ec3-1f8a-4283-817e-12b63e41e4a8
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

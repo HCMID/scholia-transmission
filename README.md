@@ -29,3 +29,4 @@ Features to model:
 - `initial-ngrams`: see distribution of initial n-grams in corpus.
 - `simplelda`: build topic models using LDA
 - `analyzetm`: load document-term data from delimited file and visualize distribution of topics by MS
+- `vocabfrequency`: view frequency of most common terms. Includes option to download list of terms.

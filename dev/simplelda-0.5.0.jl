@@ -48,7 +48,7 @@ begin
 	
 
 	md"""
-	Notebook version:  **0.4.0**
+	Notebook version:  **0.5.0**
 	"""
 	
 end
@@ -75,9 +75,6 @@ md"""> # Simple topic modeling with Latent Dirichlet Allocation (LDA)
 
 # ╔═╡ dd90da00-a92e-4d1a-a572-d148154d140b
 md"> ### Settings"
-
-# ╔═╡ f022ea86-0cc1-4bbb-a1ea-8dd24b5351cf
-alarm(text, label) = Markdown.MD(Markdown.Admonition("warn", label, [text]))
 
 # ╔═╡ 9867e9cd-4ed3-45b9-8ccf-f0e2074d9f83
 md"**Iterations to train**: $(@bind  iterations NumberField(15:150; default=40))"
@@ -177,7 +174,7 @@ tmed.corpus |> length
 md"> Allow user to select subcorpus by MS"
 
 # ╔═╡ c58eae56-1900-4239-a689-2b78d7c075c0
-bklist = ["1-24","8 only","8-10"]
+bklist = ["1-24","8 only","8-10", "omit book 8"]
 
 # ╔═╡ 61effa85-7d7e-43a3-a31c-d3e73c7f5bfb
 menu = ["all" => "All material in hmt-archive",
@@ -226,6 +223,9 @@ function nodesforBooks(commentnodes)
 		filter(cn -> startswith(passagecomponent(cn.urn), "8"), commentnodes)
 	elseif books == "8-10"
 		filter(cn -> startswith(passagecomponent(cn.urn), r"[89]|10"), commentnodes)
+	elseif books == "omit book 8"
+		@warn("OMITTING BOOK 8")
+		filter(cn -> ! startswith(passagecomponent(cn.urn), "8"), commentnodes)
 	end
 end
 
@@ -346,6 +346,9 @@ sortedscores = sort(doctopicdf, parse(Int64,hltopic), rev = true)
 # ╔═╡ f90e24b7-6d41-4cec-afbc-8d87b263cf21
 nrow(doctopicdf)
 
+# ╔═╡ f022ea86-0cc1-4bbb-a1ea-8dd24b5351cf
+alarm(text, label) = Markdown.MD(Markdown.Admonition("warn", label, [text]))
+
 # ╔═╡ b6bba209-c5a6-405d-acf3-d075438680a6
 md"> Load normalized text to display for easier reading"
 
@@ -425,7 +428,6 @@ end
 # ╟─4b840632-0ef4-490f-a9e8-c95184ca7e59
 # ╟─15088ec6-5be1-4eb5-b01a-81af28322a43
 # ╟─8bc57e73-244c-4ea0-b41b-a013fcda6baf
-# ╠═f022ea86-0cc1-4bbb-a1ea-8dd24b5351cf
 # ╟─9867e9cd-4ed3-45b9-8ccf-f0e2074d9f83
 # ╠═3bd93907-4ab4-4c12-8867-b9f8db27ad4b
 # ╟─dd87550c-6b02-404a-8c56-dbf80f22d91f
@@ -455,17 +457,18 @@ end
 # ╟─e6405518-efb3-4911-9ca3-a42c0c36ad90
 # ╟─b465f1be-29b8-40f4-96cd-b40c3ab3d326
 # ╟─0c26d794-0a06-4ad0-a244-21ff1c520d18
-# ╠═8652843f-65eb-4a42-ae81-a9aec0acef49
+# ╟─8652843f-65eb-4a42-ae81-a9aec0acef49
 # ╟─1b0e2cda-7efa-4c92-a274-dad8d43d8e8c
 # ╟─ac59e282-1cf6-457d-89a3-175a4cba6fbb
-# ╟─5b0c26d2-29ff-42d2-a7f7-82ee46b1ec8f
+# ╠═5b0c26d2-29ff-42d2-a7f7-82ee46b1ec8f
 # ╟─f4978ab6-76c6-4dc3-bf30-41f065bdbee2
 # ╟─c58eae56-1900-4239-a689-2b78d7c075c0
 # ╟─61effa85-7d7e-43a3-a31c-d3e73c7f5bfb
+# ╟─f022ea86-0cc1-4bbb-a1ea-8dd24b5351cf
 # ╟─b6bba209-c5a6-405d-acf3-d075438680a6
 # ╟─82d5e94d-af0a-4cf7-8969-144dbada012a
 # ╟─0aa818b4-b007-4c83-a267-b67b6caaa32a
-# ╠═3df43298-5112-4325-af5c-9a7e6e0afdef
+# ╟─3df43298-5112-4325-af5c-9a7e6e0afdef
 # ╟─d15fe2c1-9ef9-45db-85fb-12c9b89d4f1c
 # ╟─946c2ffb-c2fe-4279-9e86-18ce3654db5f
 # ╟─e232a0ef-5473-4708-b50f-4f1f43ebee33

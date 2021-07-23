@@ -42,8 +42,11 @@ md"""> # Clustering topic model scores
 
 # ╔═╡ c1da168e-3ccd-4767-bd63-9d3716149118
 md"""
+Configure:
+
 - Number of groups to cluster scholia in: $(@bind numtopics Slider(1:20; default=8, show_value=true))
 - Plot in 3 dimensions $(@bind plot3d CheckBox(default=true))
+- Color theme: 
 """
 
 # ╔═╡ 15ca9925-d540-4677-a598-681e94909ac1

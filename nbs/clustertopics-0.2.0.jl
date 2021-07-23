@@ -29,19 +29,25 @@ begin
 	
 	Plots.theme(:vibrant)
 	md"""
-	Demo notebook version: **0.1.0**
+	Demo notebook version: **0.2.0**
 	"""
 end
 
 # ╔═╡ 0fdff3f4-33c4-4f11-842c-184dda0b06b9
 md"""> # Clustering topic model scores
 >
-> Load 8-topic model for 4 MSS, visualize clustering in different numbers of groups.
+> Load model for 4 MSS, visualize clustering in different numbers of groups.
 
 """
 
 # ╔═╡ c1da168e-3ccd-4767-bd63-9d3716149118
-md"Choose how many clusters to group in: $(@bind numtopics Slider(3:20; default=8, show_value=true))"
+md"""
+- Number of groups to cluster scholia in: $(@bind numtopics Slider(1:20; default=8, show_value=true))
+- Plot in 3 dimensions $(@bind plot3d CheckBox(default=true))
+"""
+
+# ╔═╡ 15ca9925-d540-4677-a598-681e94909ac1
+plotdimm = plot3d ? 3 : 2
 
 # ╔═╡ 0487cc7e-d1e1-47d9-8a37-95d6a6fc1375
 md"> Load data"
@@ -53,102 +59,33 @@ url = "https://raw.githubusercontent.com/HCMID/scholia-transmission/main/topic-m
 df = CSV.File(HTTP.get(url).body) |> DataFrame
 
 # ╔═╡ bd8aa6ac-6969-4345-aab7-240666af786b
-scores = collect(Matrix(df[:, 1:8])')
+# Transform Matrix in properly oriented Matrix for cluster analysis
+scores = begin
+	colcount = (names(df) |> length) - 1
+	collect(Matrix(df[:, 1:colcount])')
+end
 
 # ╔═╡ bc41fa21-524b-4c16-95d8-48e8e8850303
-threed = umap(scores, 3)
+# Reduce multi-dimensional model to 2 or 3 dimensions for viz
+reduceddimm = umap(scores, plotdimm)
 
 # ╔═╡ 6b554431-0bdb-4410-b9bd-88e2360629c3
+# Do cluster analysis:
 topicclusters = kmeans(scores, numtopics)
 
 # ╔═╡ 56de47a8-db3f-499c-8723-85891c0e4ebd
+# Cluster each scholion is assigned to
 classassignments = assignments(topicclusters) 
 
 # ╔═╡ d7a2acc4-43e8-496d-9e29-6bfc38019067
-scatter(threed[1,:], threed[2,:], threed[3,:], marker_z=classassignments, seriescolor=:blue2)
 
-# ╔═╡ 11caede1-ae3c-403b-8bfb-6ea0bc372655
-md"""
-
----
-
----
-
----
-"""
-
-# ╔═╡ 9815f88f-d9bb-494b-8b13-cf921b164fed
-#md"Mark species by marker shape $(@bind mark CheckBox())"
-
-# ╔═╡ 509a2bad-eea1-4388-ad23-0be4162fc65f
 begin
-	if mark
-		md"""**Shapes**:
-		
-- cross == setosa
-- pentagon == versicolor
-- triangle == 	virginica	
-		
-"""		
+	if plot3d
+		scatter(reduceddimm[1,:], reduceddimm[2,:], reduceddimm[3,:], marker_z=classassignments)
 	else
-		md""
+		scatter(reduceddimm[1,:], reduceddimm[2,:], marker_z=classassignments)
 	end
 end
-
-# ╔═╡ 9a320ec3-1f8a-4283-817e-12b63e41e4a8
-#=begin
-	if mark
-		scatter(iris.PetalLength, iris.PetalWidth, marker_z=result.assignments,
-        color=:lightrainbow, legend=false, markershape=markershapes, xlabel="Petal length", ylabel="Petal width")
-	else
-		scatter(iris.PetalLength, iris.PetalWidth, marker_z=result.assignments,
-        color=:lightrainbow, legend=false, xlabel="Petal length", ylabel="Petal width")
-	end
-end=#
-
-# ╔═╡ a264daad-b5dc-40fa-b1f3-2a9c5362151e
-md"""> ## How it's done
->
-> 1. Load dataset, extract 4 numeric features.
-> 2. Assign marker shape for each point based on its species.
-> 3. Cluster data.
-
-"""
-
-# ╔═╡ 6d448250-f0af-4d39-8b8a-20187c9a8d45
-md"**1**. Load dataset and extact 4 numeric features"
-
-# ╔═╡ efa10683-a2ef-4e9e-b877-4c3fbb85dd2a
-#iris = dataset("datasets", "iris")
-
-# ╔═╡ 392e6ae7-f132-4dd0-8308-4ea68c55f2f8
-#iris |> typeof
-
-# ╔═╡ 0104055f-b360-43f3-8e3d-b2950f0182d2
-#features = collect(Matrix(iris[:, 1:4])')
-
-# ╔═╡ 84ee8ff0-d9a1-4ee1-851d-8e27d6c013d3
-md"**2**.  Assign marker shape based on its species"
-
-# ╔═╡ cd453adc-bc11-41fc-9172-0bc919281e0c
-#markershapes = map(s -> markerforspecies(s), iris[:,:Species])
-
-# ╔═╡ ce2234d3-98f5-4657-8e53-bfedef5e7933
-function markerforspecies(s)
-	if s == "setosa"
-		:cross
-	elseif s == "versicolor"
-		:pentagon
-	else
-		:rtriangle
-	end
-end
-
-# ╔═╡ 38481847-80cf-49cf-baaa-e8b0b947949b
-md"**3**. Compute `Kmeans` clustering for 3 clusters"
-
-# ╔═╡ 13880339-25b5-4f90-91e2-6b8b99c1925c
-#result = kmeans(features, 3)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1353,26 +1290,13 @@ version = "0.9.1+5"
 # ╟─0fdff3f4-33c4-4f11-842c-184dda0b06b9
 # ╟─c1da168e-3ccd-4767-bd63-9d3716149118
 # ╟─d7a2acc4-43e8-496d-9e29-6bfc38019067
+# ╟─15ca9925-d540-4677-a598-681e94909ac1
 # ╟─56de47a8-db3f-499c-8723-85891c0e4ebd
 # ╟─bc41fa21-524b-4c16-95d8-48e8e8850303
-# ╠═6b554431-0bdb-4410-b9bd-88e2360629c3
-# ╠═bd8aa6ac-6969-4345-aab7-240666af786b
+# ╟─6b554431-0bdb-4410-b9bd-88e2360629c3
+# ╟─bd8aa6ac-6969-4345-aab7-240666af786b
 # ╟─0487cc7e-d1e1-47d9-8a37-95d6a6fc1375
 # ╟─aa0612bc-86f4-45e5-865c-9628474dcd21
 # ╠═7ce78dcd-e3ad-4297-a277-d55edc668b3e
-# ╠═11caede1-ae3c-403b-8bfb-6ea0bc372655
-# ╠═9815f88f-d9bb-494b-8b13-cf921b164fed
-# ╟─509a2bad-eea1-4388-ad23-0be4162fc65f
-# ╠═9a320ec3-1f8a-4283-817e-12b63e41e4a8
-# ╟─a264daad-b5dc-40fa-b1f3-2a9c5362151e
-# ╟─6d448250-f0af-4d39-8b8a-20187c9a8d45
-# ╠═efa10683-a2ef-4e9e-b877-4c3fbb85dd2a
-# ╠═392e6ae7-f132-4dd0-8308-4ea68c55f2f8
-# ╠═0104055f-b360-43f3-8e3d-b2950f0182d2
-# ╟─84ee8ff0-d9a1-4ee1-851d-8e27d6c013d3
-# ╠═cd453adc-bc11-41fc-9172-0bc919281e0c
-# ╠═ce2234d3-98f5-4657-8e53-bfedef5e7933
-# ╟─38481847-80cf-49cf-baaa-e8b0b947949b
-# ╠═13880339-25b5-4f90-91e2-6b8b99c1925c
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

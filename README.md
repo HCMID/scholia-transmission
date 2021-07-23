@@ -21,11 +21,11 @@ Features to model:
 
 ## Some useful Pluto notebooks
 
-(Pluto notebooks in the `nbs` directory have names including a semantic version number.)
+The following Pluto notebooks can be found in the `nbs` directory with names including a semantic version number.
 
 
 
-## Exploring the corpus
+### Exploring the corpus
 
 - `termsearch`: see passages with term (anywhere in corpus). Includles TF-IDF measure of term's salience.
 - `stringsearch`: search for strings of characters in *scholia*. Includes option to download results as delimited-text file.
@@ -34,7 +34,7 @@ Features to model:
 - `analyzetm`: load document-term data from delimited file and visualize distribution of topics by MS
 - `vocabfrequency`: view frequency of most common terms. Includes option to download list of terms.
 
-## Calculating features for our model
+### Calculating features for our model
 
 
 - `centurydates`: compute an integer representing the century of the lates datable person mentioned in each scholion.

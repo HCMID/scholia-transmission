@@ -27,9 +27,8 @@ begin
 	using RDatasets
 	using MLDatasets
 	
-	Plots.theme(:vibrant)
 	md"""
-	Demo notebook version: **0.2.0**
+	Demo notebook version: **0.3.0**
 	"""
 end
 
@@ -40,13 +39,18 @@ md"""> # Clustering topic model scores
 
 """
 
+# ╔═╡ ec7bbbf0-88b7-459e-8937-de70ef613845
+themes = ["default", "dark", "ggplot2", "juno", "lime", "orange", "sand", "vibrant","solarized",
+"solarized_light", "wong", "wong2", "gruvbox_dark", "gruvbox_light", "bright", "mute", "dao"]
+
 # ╔═╡ c1da168e-3ccd-4767-bd63-9d3716149118
 md"""
 Configure:
 
 - Number of groups to cluster scholia in: $(@bind numtopics Slider(1:20; default=8, show_value=true))
 - Plot in 3 dimensions $(@bind plot3d CheckBox(default=true))
-- Color theme: 
+- Color theme: $(@bind colortheme Select(themes, default="vibrant"))  (See [theme gallery](https://docs.juliaplots.org/latest/generated/plotthemes/#:sand).)
+
 """
 
 # ╔═╡ 15ca9925-d540-4677-a598-681e94909ac1
@@ -83,6 +87,7 @@ classassignments = assignments(topicclusters)
 # ╔═╡ d7a2acc4-43e8-496d-9e29-6bfc38019067
 
 begin
+	Plots.theme(Meta.parse(colortheme))
 	if plot3d
 		scatter(reduceddimm[1,:], reduceddimm[2,:], reduceddimm[3,:], marker_z=classassignments)
 	else
@@ -109,7 +114,7 @@ CSV = "~0.8.5"
 Clustering = "~0.14.2"
 DataFrames = "~1.2.1"
 HTTP = "~0.9.12"
-MLDatasets = "~0.5.8"
+MLDatasets = "~0.5.7"
 PlotThemes = "~2.0.1"
 Plots = "~1.19.3"
 PlutoUI = "~0.7.9"
@@ -137,10 +142,10 @@ uuid = "7d9fca2a-8960-54d3-9f78-7d1dccf2cb97"
 version = "0.3.2"
 
 [[ArrayInterface]]
-deps = ["IfElse", "LinearAlgebra", "Requires", "SparseArrays", "Static"]
-git-tree-sha1 = "a71d224f61475b93c9e196e83c17c6ac4dedacfa"
+deps = ["IfElse", "LinearAlgebra", "Requires", "SparseArrays"]
+git-tree-sha1 = "ee07ae00e3cc277dcfa5507ce25be522313ecc3e"
 uuid = "4fba245c-0d91-5ea0-9b3e-6abc04ee57a9"
-version = "3.1.18"
+version = "3.1.1"
 
 [[Artifacts]]
 uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
@@ -324,10 +329,10 @@ deps = ["Random", "Serialization", "Sockets"]
 uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 
 [[Distributions]]
-deps = ["FillArrays", "LinearAlgebra", "PDMats", "Printf", "QuadGK", "Random", "SpecialFunctions", "Statistics", "StatsBase", "StatsFuns"]
-git-tree-sha1 = "e063d0b5d27180b98edacd2b1cb90ecfbc171385"
+deps = ["LinearAlgebra", "PDMats", "Printf", "QuadGK", "Random", "SpecialFunctions", "Statistics", "StatsBase", "StatsFuns"]
+git-tree-sha1 = "51d184211a807ddba5f48d06098e93986759ec43"
 uuid = "31c24e10-a181-5473-b8eb-7969acd0382f"
-version = "0.21.12"
+version = "0.21.9"
 
 [[DocStringExtensions]]
 deps = ["LibGit2"]
@@ -373,12 +378,6 @@ deps = ["Pkg", "Requires", "UUIDs"]
 git-tree-sha1 = "256d8e6188f3f1ebfa1a5d17e072a0efafa8c5bf"
 uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
 version = "1.10.1"
-
-[[FillArrays]]
-deps = ["LinearAlgebra", "Random", "SparseArrays"]
-git-tree-sha1 = "4863cbb7910079369e258dee4add9d06ead5063a"
-uuid = "1a297f60-69ca-5386-bcde-b61e274b549b"
-version = "0.8.14"
 
 [[FiniteDiff]]
 deps = ["ArrayInterface", "LinearAlgebra", "Requires", "SparseArrays", "StaticArrays"]
@@ -673,9 +672,9 @@ version = "0.10.1"
 
 [[MLDatasets]]
 deps = ["BinDeps", "ColorTypes", "DataDeps", "DelimitedFiles", "FixedPointNumbers", "GZip", "MAT", "Requires"]
-git-tree-sha1 = "454056087be66c6b802a2bf15a4a662622910ece"
+git-tree-sha1 = "c7eaf044f72245ffa50722c6d0813da9df0ff2f0"
 uuid = "eb30cadb-4394-5ae3-aed4-317e484a6458"
-version = "0.5.8"
+version = "0.5.7"
 
 [[MacroTools]]
 deps = ["Markdown", "Random"]
@@ -757,12 +756,6 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "15003dcb7d8db3c6c857fda14891a539a8f2705a"
 uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
 version = "1.1.10+0"
-
-[[OpenSpecFun_jll]]
-deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "13652491f6856acfd2db29360e1bbcd4565d04f1"
-uuid = "efe28fd5-8261-553b-a9e1-b2916fc3738e"
-version = "0.5.5+0"
 
 [[OptimBase]]
 deps = ["NLSolversBase", "Printf", "Reexport"]
@@ -963,16 +956,10 @@ deps = ["LinearAlgebra", "Random"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 
 [[SpecialFunctions]]
-deps = ["OpenSpecFun_jll"]
-git-tree-sha1 = "268052ee908b2c086cc0011f528694f02f3e2408"
+deps = ["BinDeps", "BinaryProvider", "Libdl"]
+git-tree-sha1 = "3bdd374b6fd78faf0119b8c5d538788dbf910c6e"
 uuid = "276daf66-3868-5448-9aa4-cd146d93841b"
-version = "0.9.0"
-
-[[Static]]
-deps = ["IfElse"]
-git-tree-sha1 = "62701892d172a2fa41a1f829f66d2b0db94a9a63"
-uuid = "aedffcd0-7271-4cad-89d0-dc628f76c6d3"
-version = "0.3.0"
+version = "0.8.0"
 
 [[StaticArrays]]
 deps = ["LinearAlgebra", "Random", "Statistics"]
@@ -1295,6 +1282,7 @@ version = "0.9.1+5"
 # ╟─d7a2acc4-43e8-496d-9e29-6bfc38019067
 # ╟─15ca9925-d540-4677-a598-681e94909ac1
 # ╟─56de47a8-db3f-499c-8723-85891c0e4ebd
+# ╟─ec7bbbf0-88b7-459e-8937-de70ef613845
 # ╟─bc41fa21-524b-4c16-95d8-48e8e8850303
 # ╟─6b554431-0bdb-4410-b9bd-88e2360629c3
 # ╟─bd8aa6ac-6969-4345-aab7-240666af786b

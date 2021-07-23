@@ -8,8 +8,9 @@ Content: current coverage of *scholia* in manuscripts edited by the Homer Multit
 
 Features to model:
 
-- thematic content (using topic modeling)
-- chronology (using latest reference to datable figures)
+- √ thematic content (using topic modeling)
+- √ chronology (using latest reference to datable figures)
+- √ length of scholia
 - formal features:
     - class of introductory phrase
     - other key terms or phrases like ζηνόδοτος γράφει ?

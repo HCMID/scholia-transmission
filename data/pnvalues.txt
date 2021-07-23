@@ -7,7 +7,7 @@ urn:cite2:hmt:pers.v1:pers21|Aristophanes|-2
 urn:cite2:hmt:pers.v1:pers279|Simonides|-5
 urn:cite2:hmt:pers.v1:pers300|Aristotle|-4
 urn:cite2:hmt:pers.v1:pers308|Ptolemy Epithetes|-2
-urn:cite2:hmt:pers.v1:pers323|Dionysius of Sidons|-1
+urn:cite2:hmt:pers.v1:pers323|Dionysius of Sidon|-1
 urn:cite2:hmt:pers.v1:pers4|Hesiod|-7
 urn:cite2:hmt:pers.v1:pers493|Aelius Herodianus|2
 urn:cite2:hmt:pers.v1:pers5|Pindar|-5

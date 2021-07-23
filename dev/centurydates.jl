@@ -8,6 +8,9 @@ using InteractiveUtils
 begin
 	using CitableCorpus
 	using CitableText
+	using CSV
+	using DataFrames
+	using HTTP
 	
 	md"""
 Notebook version: unreleased	
@@ -19,6 +22,12 @@ md"> # Compute latest century date (TPQ) for each *scholion*"
 
 # ╔═╡ 93e8cbe9-a613-479d-b837-1a32b71b61e0
 md"> Load data"
+
+# ╔═╡ be2fab10-1382-4396-8004-93296394d0c0
+pnids = "https://raw.githubusercontent.com/HCMID/scholia-transmission/main/data/pnvalues.txt"
+
+# ╔═╡ d24dcb7b-4306-4ec4-a497-92cbd23d4096
+CSV.File(HTTP.get(pnids).body) |> DataFrame
 
 # ╔═╡ 21963719-fd70-46a0-a6dd-b46b64dc86d6
 url = "https://raw.githubusercontent.com/hmteditors/composite-summer21/main/data/topicmodelingedition.cex"
@@ -48,12 +57,18 @@ end
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
 CitableCorpus = "cf5ac11a-93ef-4a1a-97a3-f6af101603b5"
 CitableText = "41e66566-473b-49d4-85b7-da83b66615d8"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 
 [compat]
+CSV = "~0.8.5"
 CitableCorpus = "~0.3.0"
 CitableText = "~0.9.0"
+DataFrames = "~1.2.1"
+HTTP = "~0.9.12"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -466,6 +481,8 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─9335f874-c317-4f7f-a715-9c0847186d59
 # ╟─cb3d4cfd-158a-4204-8138-5b9b8c04ef0f
 # ╟─93e8cbe9-a613-479d-b837-1a32b71b61e0
+# ╟─be2fab10-1382-4396-8004-93296394d0c0
+# ╟─d24dcb7b-4306-4ec4-a497-92cbd23d4096
 # ╟─21963719-fd70-46a0-a6dd-b46b64dc86d6
 # ╟─7ef40010-3cdc-4699-8c2a-dc13a366bdb5
 # ╟─5581f9fb-dc37-45b7-b307-6a949c4c731e

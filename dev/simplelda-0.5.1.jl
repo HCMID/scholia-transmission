@@ -48,7 +48,7 @@ begin
 	
 
 	md"""
-	Notebook version:  **0.5.0**
+	Notebook version:  **0.5.1**
 	"""
 	
 end
@@ -87,6 +87,19 @@ md"**Words to show for each topic**: $(@bind  wordstoshow NumberField(4:30; defa
 
 # ╔═╡ c72fab11-3b8f-49f1-9693-60e8dce883bf
 md">### Downloadable data"
+
+# ╔═╡ 31029539-c78a-4f51-831f-fbdf6791661c
+md"""> ## Reloadable data sources
+>
+> - Rerun the following two cells to load updated versions of the two text corpora this notebook uses.
+
+"""
+
+# ╔═╡ 0301dd89-85a0-492b-b3db-752fcd2a75d6
+md"Fully accented normalized edition (for display here for human readers)."
+
+# ╔═╡ 254d075f-59ab-4582-b86a-c5e41902005e
+md"Edition for topic modelling (case-insensitive, no accents or breathings, stop words eliminated, personal names unified)."
 
 # ╔═╡ 8dcf39c4-9cb9-446c-8d56-48b410ad1f06
 md"> Functions formatting data for download as delimited files"
@@ -438,6 +451,11 @@ end
 # ╟─a7307747-ce6c-4bd9-ab4d-3d5d682af761
 # ╟─c72fab11-3b8f-49f1-9693-60e8dce883bf
 # ╟─d6968676-c537-482d-a5b8-f3e7c413470a
+# ╟─31029539-c78a-4f51-831f-fbdf6791661c
+# ╟─0301dd89-85a0-492b-b3db-752fcd2a75d6
+# ╠═3df43298-5112-4325-af5c-9a7e6e0afdef
+# ╟─254d075f-59ab-4582-b86a-c5e41902005e
+# ╠═b465f1be-29b8-40f4-96cd-b40c3ab3d326
 # ╟─8dcf39c4-9cb9-446c-8d56-48b410ad1f06
 # ╟─4808a47f-c73e-4590-b6ba-db105ed1f8d1
 # ╟─f7cc2b56-a604-47ac-9d1a-272f50e94415
@@ -455,12 +473,11 @@ end
 # ╟─f39b668c-d883-4425-bf37-25ed23594645
 # ╟─4a8ce796-f3ce-4958-9b2c-593c0d370572
 # ╟─e6405518-efb3-4911-9ca3-a42c0c36ad90
-# ╟─b465f1be-29b8-40f4-96cd-b40c3ab3d326
 # ╟─0c26d794-0a06-4ad0-a244-21ff1c520d18
 # ╟─8652843f-65eb-4a42-ae81-a9aec0acef49
 # ╟─1b0e2cda-7efa-4c92-a274-dad8d43d8e8c
 # ╟─ac59e282-1cf6-457d-89a3-175a4cba6fbb
-# ╠═5b0c26d2-29ff-42d2-a7f7-82ee46b1ec8f
+# ╟─5b0c26d2-29ff-42d2-a7f7-82ee46b1ec8f
 # ╟─f4978ab6-76c6-4dc3-bf30-41f065bdbee2
 # ╟─c58eae56-1900-4239-a689-2b78d7c075c0
 # ╟─61effa85-7d7e-43a3-a31c-d3e73c7f5bfb
@@ -468,7 +485,6 @@ end
 # ╟─b6bba209-c5a6-405d-acf3-d075438680a6
 # ╟─82d5e94d-af0a-4cf7-8969-144dbada012a
 # ╟─0aa818b4-b007-4c83-a267-b67b6caaa32a
-# ╟─3df43298-5112-4325-af5c-9a7e6e0afdef
 # ╟─d15fe2c1-9ef9-45db-85fb-12c9b89d4f1c
 # ╟─946c2ffb-c2fe-4279-9e86-18ce3654db5f
 # ╟─e232a0ef-5473-4708-b50f-4f1f43ebee33

@@ -29,21 +29,19 @@ begin
 	
 	Plots.theme(:vibrant)
 	md"""
-	Demo notebook version: unreleased
+	Demo notebook version: **0.1.0**
 	"""
 end
 
 # ╔═╡ 0fdff3f4-33c4-4f11-842c-184dda0b06b9
-md"# Clustering topic model scores"
+md"""> # Clustering topic model scores
+>
+> Load 8-topic model for 4 MSS, visualize clustering in different numbers of groups.
 
-# ╔═╡ 4d73cccd-3d02-496d-b5ef-de4f4b90bc8a
-md"Here is a 3D visualization of 8 raw topics"
+"""
 
 # ╔═╡ c1da168e-3ccd-4767-bd63-9d3716149118
 md"Choose how many clusters to group in: $(@bind numtopics Slider(3:20; default=8, show_value=true))"
-
-# ╔═╡ ce74b0d5-5441-41ff-be56-7403390c2286
-
 
 # ╔═╡ 0487cc7e-d1e1-47d9-8a37-95d6a6fc1375
 md"> Load data"
@@ -1353,12 +1351,10 @@ version = "0.9.1+5"
 # ╔═╡ Cell order:
 # ╟─88c52dee-eb0a-11eb-197f-1fa02b3a1335
 # ╟─0fdff3f4-33c4-4f11-842c-184dda0b06b9
-# ╟─4d73cccd-3d02-496d-b5ef-de4f4b90bc8a
-# ╟─bc41fa21-524b-4c16-95d8-48e8e8850303
-# ╟─d7a2acc4-43e8-496d-9e29-6bfc38019067
 # ╟─c1da168e-3ccd-4767-bd63-9d3716149118
+# ╟─d7a2acc4-43e8-496d-9e29-6bfc38019067
 # ╟─56de47a8-db3f-499c-8723-85891c0e4ebd
-# ╠═ce74b0d5-5441-41ff-be56-7403390c2286
+# ╟─bc41fa21-524b-4c16-95d8-48e8e8850303
 # ╠═6b554431-0bdb-4410-b9bd-88e2360629c3
 # ╠═bd8aa6ac-6969-4345-aab7-240666af786b
 # ╟─0487cc7e-d1e1-47d9-8a37-95d6a6fc1375

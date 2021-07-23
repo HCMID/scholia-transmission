@@ -1,16 +1,17 @@
-urn:cite2:hmt:pers.v1:pers1109 Isocrates|-4
-urn:cite2:hmt:pers.v1:pers15 Zenodotus|-3
-urn:cite2:hmt:pers.v1:pers16 Aristarchus|-2 
-urn:cite2:hmt:pers.v1:pers178 Sophocles|-5
-urn:cite2:hmt:pers.v1:pers21 Aristophanes|-2
-urn:cite2:hmt:pers.v1:pers279 Simonides|-5
-urn:cite2:hmt:pers.v1:pers300 Aristotle|-4
-urn:cite2:hmt:pers.v1:pers308 Ptolemy Epithetes|-2
-urn:cite2:hmt:pers.v1:pers323 Dionysius of Sidonius|-1
-urn:cite2:hmt:pers.v1:pers4 Hesiod|-7
-urn:cite2:hmt:pers.v1:pers493 Aelius Herodianus|2
-urn:cite2:hmt:pers.v1:pers5 Pindar|-5
-urn:cite2:hmt:pers.v1:pers598 Democritus|-5
-urn:cite2:hmt:pers.v1:pers615 Diogenes|-1
-urn:cite2:hmt:pers.v1:pers678 Herodicus|-5
-urn:cite2:hmt:pers.v1:pers76 Nicanor|2
+urn|label|century
+urn:cite2:hmt:pers.v1:pers1109|Isocrates|-4
+urn:cite2:hmt:pers.v1:pers15|Zenodotus|-3
+urn:cite2:hmt:pers.v1:pers16|Aristarchus|-2 
+urn:cite2:hmt:pers.v1:pers178|Sophocles|-5
+urn:cite2:hmt:pers.v1:pers21|Aristophanes|-2
+urn:cite2:hmt:pers.v1:pers279|Simonides|-5
+urn:cite2:hmt:pers.v1:pers300|Aristotle|-4
+urn:cite2:hmt:pers.v1:pers308|Ptolemy Epithetes|-2
+urn:cite2:hmt:pers.v1:pers323|Dionysius of Sidons|-1
+urn:cite2:hmt:pers.v1:pers4|Hesiod|-7
+urn:cite2:hmt:pers.v1:pers493|Aelius Herodianus|2
+urn:cite2:hmt:pers.v1:pers5|Pindar|-5
+urn:cite2:hmt:pers.v1:pers598|Democritus|-5
+urn:cite2:hmt:pers.v1:pers615|Diogenes|-1
+urn:cite2:hmt:pers.v1:pers678|Herodicus|-5
+urn:cite2:hmt:pers.v1:pers76|Nicanor|2

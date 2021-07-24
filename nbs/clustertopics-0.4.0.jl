@@ -27,8 +27,9 @@ begin
 	using RDatasets
 	using MLDatasets
 	
+	plotly()
 	md"""
-	Demo notebook version: **0.3.0**
+	Demo notebook version: **0.4.0**
 	"""
 end
 

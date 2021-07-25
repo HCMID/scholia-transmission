@@ -51,6 +51,30 @@ md"""> # Compute latest century date (TPQ) for each *scholion*
 # ╔═╡ 0c5d4d9c-5118-45c0-a366-383335679e35
 md">Compute integer value for century"
 
+# ╔═╡ e0dca11f-cd0f-4b6c-8c04-a8f19fb25f15
+bklist = ["1-24","8 only","8-10", "omit book 8"]
+
+# ╔═╡ 4083fbc2-f8a1-462a-b85a-6a258700aad2
+md"""
+- Filter by book: $(@bind bkchoice Select(bklist))
+"""
+
+
+# ╔═╡ 166fa299-bd62-4f5d-9639-f13b1d2fd6cf
+#=datesperscholion = begin
+	tpqlist = ["urn|date"]
+	for sch in peopleperbkscholion
+		if isnothing(sch[2])
+			push!(tpqlist, string(sch[1].urn,"|",nothing) )
+		else
+			
+			push!(tpqlist, string(sch[1].urn,"|",mostrecent(sch[2])))
+		end
+	end
+	tpqlist
+end
+=#
+
 # ╔═╡ 7e0a2d7f-4e42-4f04-8c88-3984cc3bcf49
 md"Debug: here are the key names downloaded our dates list."
 
@@ -104,7 +128,7 @@ urnlist = map(s -> Cite2Urn(s), datablepeople[:,:urn])
 abbrlist = map(u -> labelledshortform(u,authlist), urnlist)
 
 # ╔═╡ a8fd66d0-2771-42c0-99e2-f6c0c97bfd52
-md"> Load text corpus and reduced text to include only datable personal names"
+md"> Load text corpus and reduced text to include only datable personal names.  Filter for selected book(s)."
 
 # ╔═╡ 21963719-fd70-46a0-a6dd-b46b64dc86d6
 url = "https://raw.githubusercontent.com/hmteditors/composite-summer21/main/data/topicmodelingedition.cex"
@@ -116,25 +140,40 @@ tmed = CitableCorpus.fromurl(CitableTextCorpus, url, "|")
 # Comment nodes from all HMT scholia
 tmscholia = filter(cn -> occursin("comment", cn.urn.urn),  tmed.corpus)
 
-# ╔═╡ a2e77b01-3416-479f-ac4a-110e962fba38
-peopleperscholion = begin
-	pns = []
-	for cn in tmscholia
+# ╔═╡ 5778db49-ef29-462b-b6b3-4a14eee1d0de
+bkscholia = begin
+
+	if bkchoice == "1-24"
+		tmscholia
+	elseif bkchoice == "8 only"
+		filter(cn -> startswith(passagecomponent(cn.urn), "8"), tmscholia)
+	elseif bkchoice == "8-10"
+		filter(cn -> startswith(passagecomponent(cn.urn), r"[89]|10"), tmscholia)
+	elseif bkchoice == "omit book 8"
+		@warn("OMITTING BOOK 8")
+		filter(cn -> ! startswith(passagecomponent(cn.urn), "8"), tmscholia)
+	end
+end
+
+# ╔═╡ 64af6a17-2ef0-46be-abba-0f11b611c5a7
+peopleperbkscholion = begin
+	folks = []
+	for cn in bkscholia
 		wds = split(cn.text)
 		pnids = filter(wd -> wd in abbrlist, wds)
 		if isempty(pnids)
-			push!(pns, (cn.urn,nothing))
+			push!(folks, (cn.urn,nothing))
 		else
-			push!(pns, (cn.urn,pnids))
+			push!(folks, (cn.urn,pnids))
 		end
 	end
-	pns
+	folks
 end
 
-# ╔═╡ 166fa299-bd62-4f5d-9639-f13b1d2fd6cf
+# ╔═╡ 0fec7468-5ad7-4f82-b3f7-0d08f1e18d04
 datesperscholion = begin
 	tpqlist = ["urn|date"]
-	for sch in peopleperscholion
+	for sch in peopleperbkscholion
 		if isnothing(sch[2])
 			push!(tpqlist, string(sch[1].urn,"|",nothing) )
 		else
@@ -147,24 +186,23 @@ end
 
 # ╔═╡ 8c5c9c53-209e-4c66-a648-cf5ff37f6172
 begin
-	numdated = filter(sch -> ! isnothing(sch[2]), peopleperscholion) |> length
+	numdated = filter(sch -> ! isnothing(sch[2]), peopleperbkscholion) |> length
 	
 	allseen = (length(datesperscholion) - 1) == length(tmscholia)
 	numscholia = length(tmscholia)
-	md"""Check data: evaluted $numscholia scholia. Did we compute a date value for every scholion in our corpus?  $allseen)
+	#Check data: evaluted $numscholia scholia. Did we compute a date value for every scholion in our corpus?  $allseen)
 
+
+	md"""
 We found **$numdated** scholia with datable personal names out of **$numscholia** scholia.
 """	
 end
 
 # ╔═╡ 6f292153-6d10-45e4-9413-2dae6033ff09
 begin
-	bklist = ["1-24","8 only","8-10", "omit book 8"]
 	delimited = join(datesperscholion,"\n")
-	
-	md"""
-- Filter by book: $(@bind bkchoice Select(bklist))	
-- Download delimited file $(DownloadButton(delimited,"centuries.cex"))
+	md"""- Download delimited file $(DownloadButton(delimited,"centuries.cex"))
+
 """	
 	
 end
@@ -172,11 +210,13 @@ end
 # ╔═╡ Cell order:
 # ╟─e14c020a-eb47-11eb-0383-d50478d76115
 # ╟─9335f874-c317-4f7f-a715-9c0847186d59
+# ╟─4083fbc2-f8a1-462a-b85a-6a258700aad2
 # ╟─8c5c9c53-209e-4c66-a648-cf5ff37f6172
-# ╟─0c5d4d9c-5118-45c0-a366-383335679e35
 # ╟─6f292153-6d10-45e4-9413-2dae6033ff09
-# ╟─166fa299-bd62-4f5d-9639-f13b1d2fd6cf
+# ╟─0c5d4d9c-5118-45c0-a366-383335679e35
 # ╟─655ca69d-4337-4333-9438-48dd1e7f727e
+# ╟─e0dca11f-cd0f-4b6c-8c04-a8f19fb25f15
+# ╟─166fa299-bd62-4f5d-9639-f13b1d2fd6cf
 # ╟─7e0a2d7f-4e42-4f04-8c88-3984cc3bcf49
 # ╟─fc91b59d-5179-4527-b8bd-1e3f6ee72c5b
 # ╟─93e8cbe9-a613-479d-b837-1a32b71b61e0
@@ -192,5 +232,7 @@ end
 # ╟─a8fd66d0-2771-42c0-99e2-f6c0c97bfd52
 # ╟─21963719-fd70-46a0-a6dd-b46b64dc86d6
 # ╟─7ef40010-3cdc-4699-8c2a-dc13a366bdb5
-# ╠═5581f9fb-dc37-45b7-b307-6a949c4c731e
-# ╟─a2e77b01-3416-479f-ac4a-110e962fba38
+# ╟─5581f9fb-dc37-45b7-b307-6a949c4c731e
+# ╟─5778db49-ef29-462b-b6b3-4a14eee1d0de
+# ╟─64af6a17-2ef0-46be-abba-0f11b611c5a7
+# ╟─0fec7468-5ad7-4f82-b3f7-0d08f1e18d04

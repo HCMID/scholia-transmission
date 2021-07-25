@@ -40,3 +40,8 @@ The following Pluto notebooks can be found in the `nbs` directory with names inc
 
 - `centurydates`: compute an integer representing the century of the lates datable person mentioned in each scholion.
 - `scholia-size`: compute number of "words" per scholion.
+
+
+### Modeling scholia transmission
+
+- `clustertopics`: group scholia in `k` clusters, using n-dimensional feature sets, and visualize in 2 or 3D.

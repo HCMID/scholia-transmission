@@ -15,19 +15,19 @@ Our team worked on editing Book 8 of the Burney 86 and Venetus B Manuscripts.
 
 ### Burney 86 
 
+![Opening page of Book 8 in the Burney](http://www.homermultitext.org/iipsrv?OBJ=IIP,1.0&FIF=/project/homer/pyramidal/deepzoom/citebl/burney86imgs/v1/burney_ms_86_f073r.tif&RGN=0.03210,0.02190,0.9464,0.9519&wID=250&CVT=JPEG) 
+
 The Burney 86 is a 11th century manuscript with four distinct zones of scholia (main, interior, interlinear and intermarginal) and contains content not seen in other manuscripts from the same time period. 
 
 [Explore the Burney 86 here](http://www.homermultitext.org/ict2/?urn=urn:cite2:citebl:burney86imgs.v1:burney_ms_86_f073r)
 
-![Opening page of Book 8 in the Burney](http://www.homermultitext.org/iipsrv?OBJ=IIP,1.0&FIF=/project/homer/pyramidal/deepzoom/citebl/burney86imgs/v1/burney_ms_86_f073r.tif&RGN=0.03210,0.02190,0.9464,0.9519&wID=250&CVT=JPEG) 
-
 ### Venetus B 
+
+![Opening page of Book 8 in the Venetus B](http://www.homermultitext.org/iipsrv?OBJ=IIP,1.0&FIF=/project/homer/pyramidal/deepzoom/hmt/vbbifolio/v1/vb_102v_103r.tif&RGN=0.05877,0.03545,0.8493,0.9570&wID=250&CVT=JPEG)
 
 The Venetus B is an 11th century manuscript with main scholia and isolated instances of scholia in other zones. The content of it's text and scholia is nearly identical to another 11th century manuscript, the Upsilon 1.1, such that they are refered to as the "Twins" and are believed to come from a common source. 
 
-[Explore the Venetus B here]() 
-
-![Opening page of Book 8 in the Venetus B]()
+[Explore the Venetus B here](http://www.homermultitext.org/ict2/?urn=urn:cite2:hmt:vbbifolio.v1:vb_102v_103r) 
 
 ## Homer MultiText Project
 

@@ -37,3 +37,7 @@ The Homer Multitext Project is an ongoing collaboration between several institut
 
 [Digital Edition of the Venetus A](http://www.homermultitext.org/facsimiles/venetus-a/)
 
+## Contact Us 
+
+Natalie DiMattia '22 @nadima22@g.holycross.edu
+

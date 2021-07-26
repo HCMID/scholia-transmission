@@ -41,11 +41,11 @@ The Homer Multitext Project is an ongoing collaboration between several institut
 
 ### Student Researchers 
 
-Natalie DiMattia '22 - nadima22@g.holycross.edu
-Augusta Holyfield '22 - avholy22@g.holycross.edu
-Rose Kaczmarek '23 - rrkacz23@g.holycross.edu 
-Anne-Catherine Schaaf '22 - asscha22@g.holycross.edu
+- Natalie DiMattia '22 - nadima22@g.holycross.edu
+- Augusta Holyfield '22 - avholy22@g.holycross.edu
+- Rose Kaczmarek '23 - rrkacz23@g.holycross.edu 
+- Anne-Catherine Schaaf '22 - asscha22@g.holycross.edu
 
 ### Faculty Advisor 
 
-Prof. Neel Smith - nsmith@holycross.edu
+- Prof. Neel Smith - nsmith@holycross.edu

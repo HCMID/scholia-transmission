@@ -1,5 +1,5 @@
 ---
-title: Scholia transmission project
+title: Iliad Scholia Project
 layout: page
 ---
 

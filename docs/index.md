@@ -7,10 +7,9 @@ layout: page
 
 ## Models and Results 
 
-
-1,400 scholia plotted against 10 distinct features (8 topic model clusters, chronology, and length). 
-
 ![](https://github.com/HCMID/scholia-transmission/blob/main/images/clusters-7.26.png?raw=true)
+
+*1,400 scholia plotted against 10 distinct features (8 topic model clusters, chronology, and length).* 
 
 The colors represent 8 computer generated clusters based on how the scholia align with the 10 features. This 10 dimensional space is rendered in three dimensions for easier readability. 
 

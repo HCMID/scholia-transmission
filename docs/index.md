@@ -1,11 +1,14 @@
 ---
-title: Iliad Scholia Project
+title: Scholia Project
 layout: page
 ---
 
 # Scholia Transmission in 10th & 11th Century Manuscripts of the Iliad
 
 ## Models and Results 
+
+1,400 Scholia plotted against 10 distinct features (8 topic model clusters, chronology, and length). 
+![](https://github.com/HCMID/scholia-transmission/blob/main/images/clusters-7.26.png?raw=true)
 
 [Link to GitHub Repository hosting our data and analytical notebooks](https://github.com/HCMID/scholia-transmission#readme)
 

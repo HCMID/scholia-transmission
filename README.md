@@ -37,6 +37,7 @@ The following Pluto notebooks can be found in the `nbs` directory with names inc
 
 
 - `centurydates`: compute an integer representing the century of the lates datable person mentioned in each scholion.
+- `exploredates`: view histogram of datable scholia by century.
 - `scholia-size`: compute number of "words" per scholion.
 - `viewscholialengths`: view histograms of word lengths in scholia.
 - `simplelda`: build topic models using LDA

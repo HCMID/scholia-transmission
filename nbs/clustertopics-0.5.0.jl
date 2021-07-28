@@ -29,7 +29,7 @@ begin
 	
 	plotly()
 	md"""
-	Demo notebook version: **0.4.0**
+	Demo notebook version: **0.5.0**
 	"""
 end
 
@@ -39,6 +39,9 @@ md"""> # Clustering topic model scores
 > Load model for 4 MSS, visualize clustering in different numbers of groups.
 
 """
+
+# ╔═╡ bf228e74-d498-4456-93f4-30d5b3d5fd64
+clusterfile = "clusters.txt"
 
 # ╔═╡ ec7bbbf0-88b7-459e-8937-de70ef613845
 themes = ["default", "dark", "ggplot2", "juno", "lime", "orange", "sand", "vibrant","solarized",
@@ -95,6 +98,15 @@ begin
 		scatter(reduceddimm[1,:], reduceddimm[2,:], marker_z=classassignments)
 	end
 end
+
+# ╔═╡ 6b695eb4-d22b-4a42-93df-a8e605cef53e
+clusterlist = join(classassignments,"\n")
+
+# ╔═╡ 9c863a2e-b231-44bd-8ea6-d90e169554ff
+md"Download list of cluster assignments: $(DownloadButton(clusterlist, clusterfile))"
+
+# ╔═╡ d3af7764-a4e3-4393-8690-d68dffdf5cd0
+classassignments |> length
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1281,8 +1293,12 @@ version = "0.9.1+5"
 # ╟─0fdff3f4-33c4-4f11-842c-184dda0b06b9
 # ╟─c1da168e-3ccd-4767-bd63-9d3716149118
 # ╟─d7a2acc4-43e8-496d-9e29-6bfc38019067
-# ╟─15ca9925-d540-4677-a598-681e94909ac1
+# ╟─9c863a2e-b231-44bd-8ea6-d90e169554ff
+# ╟─bf228e74-d498-4456-93f4-30d5b3d5fd64
+# ╟─6b695eb4-d22b-4a42-93df-a8e605cef53e
 # ╟─56de47a8-db3f-499c-8723-85891c0e4ebd
+# ╟─15ca9925-d540-4677-a598-681e94909ac1
+# ╟─d3af7764-a4e3-4393-8690-d68dffdf5cd0
 # ╟─ec7bbbf0-88b7-459e-8937-de70ef613845
 # ╟─bc41fa21-524b-4c16-95d8-48e8e8850303
 # ╟─6b554431-0bdb-4410-b9bd-88e2360629c3
